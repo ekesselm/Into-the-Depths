@@ -14,31 +14,31 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: andar
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: saltar
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: ataque up
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: low health
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -281,6 +281,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 2
     m_ConditionEvent: saltar
     m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: andar
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102645257899238754}
   m_Solo: 0
@@ -290,7 +293,7 @@ AnimatorStateTransition:
   m_TransitionDuration: 1.4607518
   m_TransitionOffset: 0
   m_ExitTime: 0.11764722
-  m_HasExitTime: 1
+  m_HasExitTime: 0
   m_HasFixedDuration: 0
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
@@ -849,6 +852,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 1
     m_ConditionEvent: saltar
     m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: andar
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102380685537517722}
   m_Solo: 0
@@ -858,7 +864,7 @@ AnimatorStateTransition:
   m_TransitionDuration: 0.003390491
   m_TransitionOffset: 0
   m_ExitTime: 0.75441194
-  m_HasExitTime: 1
+  m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
@@ -1242,13 +1248,13 @@ AnimatorStateMachine:
     m_Position: {x: 312, y: 300, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102380685537517722}
-    m_Position: {x: 60, y: 720, z: 0}
+    m_Position: {x: 60, y: 756, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102041696273357250}
     m_Position: {x: 756, y: 660, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102458831683826174}
-    m_Position: {x: 768, y: 1044, z: 0}
+    m_Position: {x: 624, y: 1068, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102645257899238754}
     m_Position: {x: 84, y: 1008, z: 0}
