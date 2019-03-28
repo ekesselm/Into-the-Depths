@@ -16,8 +16,8 @@ public class EnemyGroundAttack : MonoBehaviour
     public void Empujon()
     {
         bool movingRight = GetComponent<SpriteRenderer>().flipX;
-        Vector2 direction = Vector2.right;
-        if (!movingRight) direction = Vector2.left;
+        Vector2 direction = Vector2.left;
+        if (movingRight) direction = Vector2.right;
         player.GetComponent<Rigidbody2D>().AddForce(direction * fuerzaEmpujon, ForceMode2D.Impulse);
     }
 
