@@ -579,7 +579,7 @@ PlayerSettings:
   facebookStatus: 1
   facebookXfbml: 0
   facebookFrictionlessRequests: 1
-  apiCompatibilityLevel: 6
+  apiCompatibilityLevel: 2
   cloudProjectId: 82669ccc-24cc-4994-8f45-f75ff107d495
   framebufferDepthMemorylessMode: 0
   projectName: anims-test
