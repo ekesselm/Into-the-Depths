@@ -7,8 +7,6 @@ public class TempPlayer : MonoBehaviour
     public Animator player;
     public int player_speed;
     public int jump_force;
-    public int vida;
-    public bool low_health;
     public SpriteRenderer sprt_player;
     public Rigidbody2D rb;
 
@@ -18,24 +16,12 @@ public class TempPlayer : MonoBehaviour
         sprt_player = GetComponent<SpriteRenderer> ();
         sprt_player.flipX = false;
         rb = GetComponent<Rigidbody2D>();
-        vida = 100;
     }
 
     void Update()
     {
-        if (vida <= 25)
-        {
-            player.SetBool("low health", true);
-            low_health = true;
-        }
-        
-         if (vida > 25)
-        {
-            player.SetBool("low health", false);
-            low_health = false;
-        }
 
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKey(KeyCode.Q))
         {
             player.SetBool("ataque", true);
         } 
