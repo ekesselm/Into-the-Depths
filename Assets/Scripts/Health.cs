@@ -1,41 +1,82 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(Animator))]
 public class Health : MonoBehaviour
 {
-    public int Life = 100;
-    private int startLife;
+    public int Life = 4;
     private Animator animator;
-    
-    public void Damage(int damage)
-    {
-        Life -= damage;
 
-        if (Life <= startLife / 4)
+    public GameObject c1;
+    public GameObject c2;
+    public GameObject c3;
+    public GameObject c4;
+
+    Scene escenaActual;
+
+    void Start()
+    {
+        animator = GetComponent<Animator>();
+        escenaActual = SceneManager.GetActiveScene();
+    }
+
+    void Update()
+    {
+
+        if (Life == 4)
         {
+           c4.SetActive(true);
+           c3.SetActive(true);
+           c2.SetActive(true);
+           c1.SetActive(true);
+        } 
+
+        if (Life == 3)
+        {
+            c4.SetActive(false);
+            c3.SetActive(true);
+            c2.SetActive(true);
+            c1.SetActive(true);
+        }
+
+
+        if (Life == 2)
+        {
+            c4.SetActive(false);
+            c3.SetActive(false);
+            c2.SetActive(true);
+            c1.SetActive(true);
+        }
+
+
+        if (Life == 1)
+        {
+            c4.SetActive(false);
+            c3.SetActive(false);
+            c2.SetActive(false);
+            c1.SetActive(true);
             animator.SetBool("lowHealth", true);
         }
 
+
         if (Life <= 0)
         {
-            
-        Destroy(gameObject);
+
+            SceneManager.LoadScene(escenaActual.name);
+
         }
         Debug.Log(Life);
     }
 
 
-    void Start()
+ 
+    void actualizaUI()
     {
-        animator = GetComponent<Animator>();
-        startLife = Life;
+        
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
+ 
 }

@@ -10,21 +10,23 @@ public class EnemyGroundAttack : MonoBehaviour
     
     public float fuerzaEmpujon;
 
-    public int enemyDamage = 25;
+    public int enemyDamage = 1;
 
-    private GameObject player;
+    public Health playerHealth;
+
+    public GameObject player;
     private Animator Enemy1Animator;
     
     public void Empujon()
     {
-        if (player)
-        {
+       
             bool movingRight = GetComponent<EnemyGroundMovement>().isMovingRight();
             Vector2 direction = Vector2.left;
             if (movingRight) direction = Vector2.right;
             player.GetComponent<Rigidbody2D>().AddForce(direction * fuerzaEmpujon, ForceMode2D.Impulse);
+            StartCoroutine("RetardoVida");
             Debug.Log("Movimiento a la derecha " + movingRight);
-        }
+        
     }
 
     void Start()
@@ -40,6 +42,14 @@ public class EnemyGroundAttack : MonoBehaviour
 
     }
 
+    IEnumerator RetardoVida()
+    {
+        new WaitForSeconds(1.5f);
+        playerHealth.Life -= enemyDamage;
+        yield return new WaitForSeconds(0.1f);
+
+    }
+
     void OnTriggerEnter2D(Collider2D col){
     
         if (col.transform.CompareTag("Player")){
@@ -48,8 +58,13 @@ public class EnemyGroundAttack : MonoBehaviour
                 GetComponent<EnemyGroundMovement>().isAttacking = true;
                 player = col.gameObject;
                 StartCoroutine("tiempoEsperaAtaque");
-                player.GetComponent<Health>().Damage(enemyDamage);
 
+
+
+
+
+
+            //player.GetComponent<Health>().Damage(enemyDamage);
             }
         }
 

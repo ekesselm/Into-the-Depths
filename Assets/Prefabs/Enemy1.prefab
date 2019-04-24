@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 5341692567587365100}
   - component: {fileID: 5341692567587365097}
   - component: {fileID: 5341692567587365096}
-  - component: {fileID: 8561778780511830132}
   - component: {fileID: 5341692567587365099}
   - component: {fileID: 5341692567587365109}
   - component: {fileID: 5341692567587365098}
@@ -143,19 +142,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &8561778780511830132
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5341692567587365101}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b2261746f4f869b4a9c0772a13fe5aed, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Life: 75
 --- !u!114 &5341692567587365099
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -186,7 +172,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tiempoAtaque: 2
   fuerzaEmpujon: 40
-  enemyDamage: 25
+  enemyDamage: 1
 --- !u!58 &5341692567587365098
 CircleCollider2D:
   m_ObjectHideFlags: 0
