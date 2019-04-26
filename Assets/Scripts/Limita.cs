@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Limita : MonoBehaviour
 {
-    public Animator player;
+    public Animator playerAnim;
     // Start is called before the first frame update
     void Start()
     {
-        
+        //playerAnim = gameObject.GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -21,7 +21,8 @@ public class Limita : MonoBehaviour
     {
         if (obj.transform.tag == "Player")
         {
-            player.SetBool("andar", false);
+            playerAnim.SetBool("andar", false);
+            playerAnim.SetBool("saltar", false);
         }
     }
 }

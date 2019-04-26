@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 965254022244509747}
   - component: {fileID: 3316616441693298393}
   - component: {fileID: 30436601379214227}
+  - component: {fileID: 2152581563745299534}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -76,7 +77,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: d4ebad4623ed4ad48be9bdf4f96ed233, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.7233019, g: 0.7399842, b: 0.748, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -133,7 +134,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 13.74
+  m_Mass: 3
   m_LinearDrag: 1
   m_AngularDrag: 1
   m_GravityScale: 9.8
@@ -155,15 +156,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 3067148521796172942}
-  speed: 16
-  jumpForce: 20
-  isGrounded: 1
+  speed: 14
+  jumpForce: 18
+  isGrounded: 0
   feetPos: {fileID: 412014553249613147}
-  checkRadius: 3
+  checkRadius: 0.3
   whatisGround:
     serializedVersion: 2
     m_Bits: 512
-  jumpTimeCounter: -0.014
+  jumpTimeCounter: 0.11
   jumpTime: 0.4
   isJumping: 0
 --- !u!114 &3316616441693298393
@@ -178,7 +179,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ed6437c46349da40b5c163fba8a0ded, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fallMultiplier: 16
+  fallMultiplier: 8
   lowJumpMultiplier: 9
 --- !u!114 &30436601379214227
 MonoBehaviour:
@@ -192,7 +193,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2261746f4f869b4a9c0772a13fe5aed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Life: 100
+  Life: 4
+  c1: {fileID: 0}
+  c2: {fileID: 0}
+  c3: {fileID: 0}
+  c4: {fileID: 0}
+--- !u!114 &2152581563745299534
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3067148521796172937}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd790d85f8c7b634e9108003c4726907, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bloqueoAtaque: 0
+  fuerzaEmpujon: 0
+  vidaEnemigo: {fileID: 0}
+  player: {fileID: 0}
+  Enemy: {fileID: 0}
+  "recibeDa\xF1o": 0
 --- !u!1 &7449946109653808040
 GameObject:
   m_ObjectHideFlags: 0
@@ -204,8 +227,8 @@ GameObject:
   - component: {fileID: 412014553249613147}
   m_Layer: 9
   m_Name: FeetPos
-  m_TagString: Ground
-  m_Icon: {fileID: 0}
+  m_TagString: Untagged
+  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -217,7 +240,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7449946109653808040}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.1839657, y: 4.900008, z: -0.2581057}
+  m_LocalPosition: {x: 0.18, y: -2.741, z: -0.2581057}
   m_LocalScale: {x: 1.131862, y: 1.131862, z: 1.131862}
   m_Children: []
   m_Father: {fileID: 3067148521796172941}

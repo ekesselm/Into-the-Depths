@@ -6,6 +6,7 @@ TagManager:
   tags:
   - PlayerPos
   - Ground
+  - Enemy
   layers:
   - Default
   - TransparentFX

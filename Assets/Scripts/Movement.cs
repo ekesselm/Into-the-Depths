@@ -37,17 +37,6 @@ public class Movement : MonoBehaviour {
 
         isGrounded = Physics2D.OverlapCircle(feetPos.position, checkRadius, whatisGround);
 
-        if (Input.GetKeyDown(KeyCode.Q))
-		{
-			player.SetBool("ataque", true);
-		} 
-
-		if (Input.GetKeyUp(KeyCode.Q))
-		{
-			player.SetBool("ataque", false);
-		}
-
-
         if (moveInput > 0){
 
          transform.eulerAngles = new Vector3(0,0,0);

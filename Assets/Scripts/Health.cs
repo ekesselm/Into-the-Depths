@@ -68,7 +68,6 @@ public class Health : MonoBehaviour
             SceneManager.LoadScene(escenaActual.name);
 
         }
-        Debug.Log(Life);
     }
 
 

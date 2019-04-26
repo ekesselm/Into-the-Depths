@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 5341692567587365098}
   m_Layer: 0
   m_Name: Enemy1
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -172,7 +172,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tiempoAtaque: 2
   fuerzaEmpujon: 40
-  enemyDamage: 1
+  playerHealth: {fileID: 0}
+  player: {fileID: 0}
 --- !u!58 &5341692567587365098
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -186,9 +187,9 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.9309281, y: -0.089062765}
+  m_Offset: {x: 0.9309281, y: -0.14549443}
   serializedVersion: 2
-  m_Radius: 0.6277115
+  m_Radius: 0.5712798
 --- !u!1 &5341692567913446158
 GameObject:
   m_ObjectHideFlags: 0
@@ -213,7 +214,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5341692567913446158}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.1, y: -0.1, z: 0}
+  m_LocalPosition: {x: 3.67, y: -0.1, z: 0}
   m_LocalScale: {x: 1.131862, y: 1.131862, z: 1.131862}
   m_Children: []
   m_Father: {fileID: 5341692567587365102}

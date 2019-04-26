@@ -18,7 +18,7 @@ public class Spikes : MonoBehaviour {
     {
         if (player)
             {
-            Vector2 direction = Vector2.up;
+            Vector2 direction = Vector2.right;
             player.GetComponent<Rigidbody2D>().AddForce(direction * fuerzaEmpujon, ForceMode2D.Impulse);
             Debug.Log("PINCHOS BITCH!");
             }
@@ -29,7 +29,6 @@ public class Spikes : MonoBehaviour {
     IEnumerator tiempoEsperaAtaque()
     {
         yield return new WaitForSeconds(tiempoAtaque);
-        GetComponent<EnemyGroundMovement>().isAttacking = false;
 
     }
 
