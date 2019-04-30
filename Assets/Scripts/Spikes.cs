@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Spikes : MonoBehaviour {
 
-    public float tiempoAtaque = 0.60f;
-
     public float fuerzaEmpujon;
 
     public int enemyDamage = 1;
+
+    public float lockPlayerSeconds = 1f;
 
     public Health playerHealth;
 
@@ -18,7 +18,8 @@ public class Spikes : MonoBehaviour {
     {
         if (player)
             {
-            Vector2 direction = Vector2.right;
+            Vector2 direction = Vector2.up;
+            player.GetComponent<Movement>().ReceiveAttack(lockPlayerSeconds);
             player.GetComponent<Rigidbody2D>().AddForce(direction * fuerzaEmpujon, ForceMode2D.Impulse);
             Debug.Log("PINCHOS BITCH!");
             }
@@ -28,7 +29,8 @@ public class Spikes : MonoBehaviour {
 
     IEnumerator tiempoEsperaAtaque()
     {
-        yield return new WaitForSeconds(tiempoAtaque);
+        new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(0.1f);
 
     }
 

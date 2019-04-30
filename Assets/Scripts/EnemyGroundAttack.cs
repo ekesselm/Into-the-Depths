@@ -7,32 +7,32 @@ public class EnemyGroundAttack : MonoBehaviour
 {
 
     public float tiempoAtaque = 0.60f;
-    
     public float fuerzaEmpujon;
-
     public int enemyDamage = 1;
-
     public Health playerHealth;
+    public float lockPlayerSeconds = 1f;
 
-    public GameObject player;
+    private GameObject player;
     private Animator Enemy1Animator;
     
     public void Empujon()
     {
-       
-            bool movingRight = GetComponent<EnemyGroundMovement>().isMovingRight();
-            Vector2 direction = Vector2.left;
-            if (movingRight) direction = Vector2.right;
-            player.GetComponent<Rigidbody2D>().AddForce(direction * fuerzaEmpujon, ForceMode2D.Impulse);
-            StartCoroutine("RetardoVida");
-            Debug.Log("Movimiento a la derecha " + movingRight);
+        // Detectar hacia que lado dar el empujón
+        bool movingRight = GetComponent<EnemyGroundMovement>().isMovingRight();
+        Vector2 direction = Vector2.left;
+        if (movingRight) direction = Vector2.right;
+        Debug.Log("Empujando a la derecha? " + movingRight);
+
+        // Empujón
+        player.GetComponent<Movement>().ReceiveAttack(lockPlayerSeconds);
+        player.GetComponent<Rigidbody2D>().AddForce(direction * fuerzaEmpujon, ForceMode2D.Impulse);
+        StartCoroutine("RetardoVida");
         
     }
 
     void Start()
     {
         Enemy1Animator = gameObject.GetComponent<Animator>();
-
     }
 
     IEnumerator tiempoEsperaAtaque()
@@ -50,23 +50,19 @@ public class EnemyGroundAttack : MonoBehaviour
 
     }
 
-    void OnTriggerEnter2D(Collider2D col){
-    
-        if (col.transform.CompareTag("Player")){
-                Debug.Log("enemy detected");
-                Enemy1Animator.SetBool("atacar", true);
-                GetComponent<EnemyGroundMovement>().isAttacking = true;
-                player = col.gameObject;
-                StartCoroutine("tiempoEsperaAtaque");
-
-
-
-
-
+    private void OnCollisionEnter2D(Collision2D col)
+    {
+        if (col.transform.CompareTag("Player"))
+        {
+            Enemy1Animator.SetBool("atacar", true);
+            GetComponent<EnemyGroundMovement>().isAttacking = true;
+            player = col.gameObject;
+            StartCoroutine("tiempoEsperaAtaque");
 
             //player.GetComponent<Health>().Damage(enemyDamage);
-            }
         }
+
+    }
 
     void OnTriggerExit2D(Collider2D col)
     {

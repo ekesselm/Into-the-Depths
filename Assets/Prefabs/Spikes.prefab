@@ -270,7 +270,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41cea7876c6057242babbc767bd9bef4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tiempoAtaque: 0.6
-  fuerzaEmpujon: 8
+  fuerzaEmpujon: 215
   enemyDamage: 1
+  lockPlayerSeconds: 0.2
   playerHealth: {fileID: 0}
