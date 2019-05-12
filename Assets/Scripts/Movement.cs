@@ -17,7 +17,7 @@ public class Movement : MonoBehaviour
     public LayerMask whatisGround;
 
     public float jumpTime;
-    public bool isJumping;
+    public bool notJumping;
 
     private Animator animator;
     private float moveInput;
@@ -31,11 +31,13 @@ public class Movement : MonoBehaviour
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         locked = false;
-        //Scene scene = SceneManager.GetActiveScene(); SceneManager.LoadScene(scene.name);
+        Scene scene = SceneManager.GetActiveScene();
+        //SceneManager.LoadScene(scene.name);
     }
 
     void FixedUpdate()
     {
+
         moveInput = Input.GetAxisRaw("Horizontal");
         jumpInput = Input.GetAxisRaw("Vertical");
 
@@ -55,29 +57,24 @@ public class Movement : MonoBehaviour
 
         if (canJump)
         {
-            isJumping = true;
+            notJumping = true;
             jumpTimeCounter = jumpTime;
             rb.velocity = Vector2.up * jumpForce;
         }
         
-        if (isJumping && jumpInput > 0)
+        if (notJumping && jumpInput > 0)
         {
             if(jumpTimeCounter > 0){
                 rb.velocity = Vector2.up * jumpForce;
                 jumpTimeCounter -= 1*Time.deltaTime;
             } else {
-                isJumping = false;
+                notJumping = false;
             }
         }
 
-        if(jumpInput <= 0)
-        {
-            isJumping = false;
-        }
-
         MoveAnimation();
+        
     }
-
     private void MoveAnimation()
     {
 
@@ -92,7 +89,7 @@ public class Movement : MonoBehaviour
             transform.eulerAngles = new Vector3(0, 180, 0);
         }
 
-        animator.SetBool("saltar", isJumping);
+        animator.SetBool("saltar", jumpInput != 0f);
     }
 
     public void ReceiveAttack(float lockedSeconds)
@@ -107,3 +104,4 @@ public class Movement : MonoBehaviour
         locked = false;
     }
 }
+
