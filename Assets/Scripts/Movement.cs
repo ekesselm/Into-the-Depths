@@ -103,5 +103,10 @@ public class Movement : MonoBehaviour
     {
         locked = false;
     }
+
+    public bool IsMoving()
+    {
+        return moveInput != 0 || jumpInput != 0;
+    }
 }
 
