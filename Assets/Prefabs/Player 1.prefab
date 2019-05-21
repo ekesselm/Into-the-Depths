@@ -81,7 +81,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: d4ebad4623ed4ad48be9bdf4f96ed233, type: 3}
-  m_Color: {r: 0.4056604, g: 0.4056604, b: 0.4056604, a: 1}
+  m_Color: {r: 0.23799999, g: 0.23799999, b: 0.23799999, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -144,14 +144,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 14
-  jumpForce: 20
+  jumpForce: 38
   isGrounded: 0
   feetPos: {fileID: 3913705412321982898}
   checkRadius: 0.3
   whatisGround:
     serializedVersion: 2
     m_Bits: 512
-  jumpTime: 0.4
+  jumpTime: 0.2
   notJumping: 0
 --- !u!114 &2153140975820399152
 MonoBehaviour:
@@ -166,7 +166,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallMultiplier: 18
-  lowJumpMultiplier: 16
+  lowJumpMultiplier: 20
 --- !u!114 &3714241224109289338
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -281,7 +281,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3740102445279475549}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.15, y: 0.3, z: 0}
+  m_LocalPosition: {x: -0.39, y: 0, z: 0}
   m_LocalScale: {x: 24.943811, y: 24.008417, z: 24.943811}
   m_Children: []
   m_Father: {fileID: 1834988214616834148}
