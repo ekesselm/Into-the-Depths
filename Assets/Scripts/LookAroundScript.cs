@@ -6,7 +6,6 @@ public class LookAroundScript : MonoBehaviour
 {
     public GameObject LookAroundObject;
     public GameObject player;
-    public float speed = 10f;
     public Cinemachine.CinemachineVirtualCameraBase CMcamera;
 
     private Movement playerMovement;
@@ -24,8 +23,6 @@ public class LookAroundScript : MonoBehaviour
     private void Update()
     {
         CMcamera.Follow = playerMovement.IsMoving() ? player.transform : LookAroundObject.transform;
-        Debug.Log(playerMovement.IsMoving());
-
         transform.position = player.transform.position;
     }
 
