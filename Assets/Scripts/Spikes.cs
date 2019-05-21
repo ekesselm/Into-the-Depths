@@ -12,17 +12,11 @@ public class Spikes : MonoBehaviour {
 
     public Health playerHealth;
 
-    private GameObject player;
-
-    public void Empujon()
+    public void Empujon(GameObject player)
     {
-        if (player)
-            {
-            Vector2 direction = Vector2.up;
             player.GetComponent<Movement>().ReceiveAttack(lockPlayerSeconds);
-            player.GetComponent<Rigidbody2D>().AddForce(direction * fuerzaEmpujon, ForceMode2D.Impulse);
-            Debug.Log("PINCHOS BITCH!");
-            }
+            player.GetComponent<Rigidbody2D>().AddForce(Vector2.up * fuerzaEmpujon, ForceMode2D.Impulse);
+            Debug.Log("Fuerza aplicada");
     }
 
 
@@ -37,13 +31,13 @@ public class Spikes : MonoBehaviour {
     void OnCollisionEnter2D(Collision2D col)
     {
         Debug.Log("PINCHOS BITCH!");
-        if (col.transform.tag ==("Player"))
-            {
-            Empujon();
-            player = col.gameObject;
+
+        if (col.transform.tag == "Player")
+        {
+            Empujon(col.gameObject);
             StartCoroutine("tiempoEsperaAtaque");
             playerHealth.Life -= enemyDamage;
 
         }
-        }
     }
+}
