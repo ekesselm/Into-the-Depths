@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LookAround : MonoBehaviour
+public class Follow : MonoBehaviour
 {
+    public GameObject target;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -13,6 +15,6 @@ public class LookAround : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        transform.position = target.transform.position;
     }
 }
