@@ -25,6 +25,9 @@ public class Movement : MonoBehaviour
     private bool locked;
     private float jumpTimeCounter = 0f;
 
+    private bool needPressJumpButtonAgain;
+    private bool canJump;
+
 
     void Start()
     {
@@ -48,7 +51,7 @@ public class Movement : MonoBehaviour
     {
 
         isGrounded = Physics2D.OverlapCircle(feetPos.position, checkRadius, whatisGround);
-        bool canJump = isGrounded && jumpInput > 0;
+        canJump = isGrounded && jumpInput > 0 && !needPressJumpButtonAgain;
 
         if (Input.GetKeyDown(KeyCode.R))
         {
@@ -57,6 +60,7 @@ public class Movement : MonoBehaviour
 
         if (canJump)
         {
+            needPressJumpButtonAgain = true;
             notJumping = true;
             jumpTimeCounter = jumpTime;
             rb.velocity = Vector2.up * jumpForce;
@@ -71,6 +75,8 @@ public class Movement : MonoBehaviour
                 notJumping = false;
             }
         }
+
+        if (jumpInput == 0) needPressJumpButtonAgain = false;
 
         MoveAnimation();
         
@@ -89,7 +95,7 @@ public class Movement : MonoBehaviour
             transform.eulerAngles = new Vector3(0, 180, 0);
         }
 
-        animator.SetBool("saltar", jumpInput != 0f);
+        animator.SetBool("saltar", jumpInput != 0f && canJump);
     }
 
     public void ReceiveAttack(float lockedSeconds)
