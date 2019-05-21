@@ -49,26 +49,26 @@ public class Movement : MonoBehaviour
 
     void Update()
     {
-
-        isGrounded = Physics2D.OverlapCircle(feetPos.position, checkRadius, whatisGround);
-        canJump = isGrounded && jumpInput > 0 && !needPressJumpButtonAgain;
-
         if (Input.GetKeyDown(KeyCode.R))
         {
             Scene scene = SceneManager.GetActiveScene(); SceneManager.LoadScene(scene.name);
         }
+
+
+        isGrounded = Physics2D.OverlapCircle(feetPos.position, checkRadius, whatisGround);
+        canJump = isGrounded && jumpInput > 0 && !needPressJumpButtonAgain;
 
         if (canJump)
         {
             needPressJumpButtonAgain = true;
             notJumping = true;
             jumpTimeCounter = jumpTime;
-            rb.velocity = Vector2.up * jumpForce;
         }
         
         if (notJumping && jumpInput > 0)
         {
-            if(jumpTimeCounter > 0){
+            canJump = false;
+            if (jumpTimeCounter > 0){
                 rb.velocity = Vector2.up * jumpForce;
                 jumpTimeCounter -= 1*Time.deltaTime;
             } else {
@@ -76,6 +76,7 @@ public class Movement : MonoBehaviour
             }
         }
 
+        // Restart jump
         if (jumpInput == 0) needPressJumpButtonAgain = false;
 
         MoveAnimation();
