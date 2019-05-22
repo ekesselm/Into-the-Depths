@@ -20,7 +20,7 @@ public class MapMechanic : MonoBehaviour
     void Update()
     {
     
-      if (Input.GetKeyDown(KeyCode.Space))
+      if (Input.GetKeyDown(KeyCode.M))
         {
             PanelActive = !PanelActive;
         }
