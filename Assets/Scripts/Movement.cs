@@ -34,8 +34,6 @@ public class Movement : MonoBehaviour
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         locked = false;
-        Scene scene = SceneManager.GetActiveScene();
-        //SceneManager.LoadScene(scene.name);
     }
 
     void FixedUpdate()
@@ -49,11 +47,6 @@ public class Movement : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            Scene scene = SceneManager.GetActiveScene(); SceneManager.LoadScene(scene.name);
-        }
-
 
         isGrounded = Physics2D.OverlapCircle(feetPos.position, checkRadius, whatisGround);
         canJump = isGrounded && jumpInput > 0 && !needPressJumpButtonAgain;
@@ -87,6 +80,8 @@ public class Movement : MonoBehaviour
 
         animator.SetBool("andar", moveInput != 0f);
 
+        animator.SetBool("saltar", jumpInput != 0f && canJump);
+
         if (moveInput > 0)
         {
             transform.eulerAngles = new Vector3(0, 0, 0);
@@ -95,8 +90,6 @@ public class Movement : MonoBehaviour
         {
             transform.eulerAngles = new Vector3(0, 180, 0);
         }
-
-        animator.SetBool("saltar", jumpInput != 0f && canJump);
     }
 
     public void ReceiveAttack(float lockedSeconds)

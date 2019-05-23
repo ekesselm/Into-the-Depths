@@ -31,6 +31,8 @@ AnimationClip:
       value: {fileID: 21300000, guid: 5fbeeb11033d28444bd95e3ae7bf365a, type: 3}
     - time: 0.56666666
       value: {fileID: 21300000, guid: 5fbeeb11033d28444bd95e3ae7bf365a, type: 3}
+    - time: 1.25
+      value: {fileID: 21300000, guid: 5fbeeb11033d28444bd95e3ae7bf365a, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -56,12 +58,13 @@ AnimationClip:
     - {fileID: 21300000, guid: 2d0f3990a8c271a438a98bb4866b4a8e, type: 3}
     - {fileID: 21300000, guid: 5fbeeb11033d28444bd95e3ae7bf365a, type: 3}
     - {fileID: 21300000, guid: 5fbeeb11033d28444bd95e3ae7bf365a, type: 3}
+    - {fileID: 21300000, guid: 5fbeeb11033d28444bd95e3ae7bf365a, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.5833333
+    m_StopTime: 1.2666667
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -81,7 +84,7 @@ AnimationClip:
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events:
-  - time: 0.56666666
+  - time: 1.25
     functionName: DieBitch
     data: 
     objectReferenceParameter: {fileID: 0}

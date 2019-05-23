@@ -13,26 +13,33 @@ public class PlayerDamage : MonoBehaviour
 
     private Animator playerAnimator;
 
+    public Animator Enemy1Anim;
+
     private int playerDamage = 1;
 
     public GameObject player;
+
     public GameObject Enemy;
 
     public bool recibeDaño;
 
     IEnumerator retardoAtaque()
     {
-        playerAnimator.SetBool("ataque", false);
         yield return new WaitForSeconds(bloqueoAtaque);
-      
+        Enemy1Anim.SetBool("hit", false);
+        vidaEnemigo.enemyLife = vidaEnemigo.enemyLife - playerDamage;
+
     }
 
 
     public void PlayerAttacks()
     {
 
+        Enemy1Anim.SetBool("hit", true);
         StartCoroutine("retardoAtaque");
-        Enemy.GetComponent<Rigidbody2D>().AddForce(transform.up * fuerzaEmpujon, ForceMode2D.Impulse);
+        playerAnimator.SetBool("ataque", false);
+        //Enemy.GetComponent<Rigidbody2D>().AddForce(transform.up * fuerzaEmpujon, ForceMode2D.Impulse);
+
 
     }
 
@@ -57,6 +64,8 @@ public class PlayerDamage : MonoBehaviour
     {
 
         playerAnimator = gameObject.GetComponent<Animator>();
+        Enemy1Anim = Enemy.GetComponent<Animator>();
+
 
     }
 
@@ -71,13 +80,14 @@ public class PlayerDamage : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Q) && recibeDaño == true)
             {
-                vidaEnemigo.enemyLife = vidaEnemigo.enemyLife - playerDamage;
+                playerAnimator.SetBool("ataque", true);
                 Debug.Log(vidaEnemigo.enemyLife);
                 PlayerAttacks();
+                
+                 
             }
 
         }
 
-    }
-
-} 
+    }        
+ }
