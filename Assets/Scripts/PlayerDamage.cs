@@ -76,9 +76,14 @@ public class PlayerDamage : MonoBehaviour
             playerAnimator.SetBool("ataque", true);
         }
 
+        if (Input.GetKeyDown(KeyCode.Q) && Input.GetKeyDown(KeyCode.W))
+        {
+            playerAnimator.SetBool("ataque up", true);
+        }
+
         if (recibeDaño == true)
         {
-            if (Input.GetKeyDown(KeyCode.Q) && recibeDaño == true)
+            if (Input.GetKeyDown(KeyCode.Q))
             {
                 playerAnimator.SetBool("ataque", true);
                 Debug.Log(vidaEnemigo.enemyLife);
@@ -87,6 +92,14 @@ public class PlayerDamage : MonoBehaviour
                  
             }
 
+            if (Input.GetKeyDown(KeyCode.Q) && Input.GetKeyDown(KeyCode.W))
+            {
+                playerAnimator.SetBool("ataque up", true);
+                Debug.Log(vidaEnemigo.enemyLife);
+                PlayerAttacks();
+
+
+            }
         }
 
     }        
