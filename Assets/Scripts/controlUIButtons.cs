@@ -32,10 +32,7 @@ public class controlUIButtons : MonoBehaviour
 
     public void CerrarPartida()
     {
-        if (Input.GetKey("escape"))
-        {
             Application.Quit();
-        }
     }
 
     IEnumerator EsperaQueFade()

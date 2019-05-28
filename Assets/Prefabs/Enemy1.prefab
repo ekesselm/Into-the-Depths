@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 163677027}
   - component: {fileID: 163677029}
   - component: {fileID: 163677028}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: PlayerDetectionArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -58,7 +58,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.4246359, y: 0}
+  m_Offset: {x: 1.1452382, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -69,7 +69,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 47.380424, y: 1}
+  m_Size: {x: 16.226698, y: 1}
   m_EdgeRadius: 0
 --- !u!1 &5341692567587365101
 GameObject:
@@ -88,7 +88,7 @@ GameObject:
   - component: {fileID: 5341692567587365109}
   - component: {fileID: 5341692567587365098}
   - component: {fileID: 1594602470}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Enemy1
   m_TagString: Enemy
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
@@ -230,7 +230,7 @@ MonoBehaviour:
   Limit: {fileID: 5341692567913446153}
   speed: 4
   distance: 0
-  playerDetectionArea: {fileID: 0}
+  playerDetectionArea: {fileID: 163677028}
   isAttacking: 0
   isStopped: 0
 --- !u!114 &5341692567587365109
@@ -245,11 +245,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 732384164623c054fbf1a7c1279526f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tiempoAtaque: 2
-  fuerzaEmpujon: 40
+  tiempoAtaque: 1
+  fuerzaEmpujon: 30
   enemyDamage: 1
   playerHealth: {fileID: 0}
-  lockPlayerSeconds: 1
+  lockPlayerSeconds: 0.5
 --- !u!58 &5341692567587365098
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -263,9 +263,9 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.9309281, y: -0.14549443}
+  m_Offset: {x: 1.6788377, y: -0.12247402}
   serializedVersion: 2
-  m_Radius: 0.5712798
+  m_Radius: 1.1370283
 --- !u!114 &1594602470
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -278,7 +278,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1131175a30972db4391ef56cefa6ef3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyLife: 160
+  enemyLife: 3
 --- !u!1 &5341692567913446158
 GameObject:
   m_ObjectHideFlags: 0
@@ -288,7 +288,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5341692567913446153}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Enemy1_Limit
   m_TagString: Untagged
   m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}

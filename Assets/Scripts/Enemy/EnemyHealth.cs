@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour
 {
-    public int enemyLife = 2;
+    public int enemyLife = 3;
     private Animator EnemyAnim;
 
     public void DieBitch()
@@ -16,7 +16,6 @@ public class EnemyHealth : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        enemyLife = 2;
         EnemyAnim = GetComponent<Animator>();
     }
 
@@ -25,9 +24,8 @@ public class EnemyHealth : MonoBehaviour
     {
         if (enemyLife <= 0)
         {
-
+            GetComponent<EnemyGroundMovement>().dead = true;
             EnemyAnim.SetBool("muerte", true); 
-
         }
     }
 }

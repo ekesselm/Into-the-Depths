@@ -27,6 +27,7 @@ public class Movement : MonoBehaviour
 
     private bool needPressJumpButtonAgain;
     private bool canJump;
+    private Vector2 direction;
 
 
     void Start()
@@ -38,58 +39,64 @@ public class Movement : MonoBehaviour
 
     void FixedUpdate()
     {
-
         moveInput = Input.GetAxisRaw("Horizontal");
         jumpInput = Input.GetAxisRaw("Vertical");
 
         if (!locked) rb.velocity = new Vector2(moveInput * speed, rb.velocity.y);
     }
 
-    void Update()
+    public bool IsGrounded()
     {
+        return Physics2D.OverlapCircle(feetPos.position, checkRadius, whatisGround);
+    }
 
-        isGrounded = Physics2D.OverlapCircle(feetPos.position, checkRadius, whatisGround);
-        canJump = isGrounded && jumpInput > 0 && !needPressJumpButtonAgain;
+    void Update() { 
+        canJump = IsGrounded() && jumpInput > 0 && !needPressJumpButtonAgain;
+        MoveAnimation();
 
         if (canJump)
         {
             needPressJumpButtonAgain = true;
-            notJumping = true;
             jumpTimeCounter = jumpTime;
         }
         
-        if (notJumping && jumpInput > 0)
+        if (jumpInput > 0)
         {
-            canJump = false;
+            animator.SetBool("saltar", true);
+
             if (jumpTimeCounter > 0){
                 rb.velocity = Vector2.up * jumpForce;
                 jumpTimeCounter -= 1*Time.deltaTime;
-            } else {
-                notJumping = false;
-            }
+            } 
         }
 
         // Restart jump
         if (jumpInput == 0) needPressJumpButtonAgain = false;
 
-        MoveAnimation();
-        
     }
+
     private void MoveAnimation()
     {
-
+        Debug.Log("canJump " + canJump);
+        Debug.Log("jumpInput " + (jumpInput != 0f));
         animator.SetBool("andar", moveInput != 0f);
-
         animator.SetBool("saltar", jumpInput != 0f && canJump);
 
         if (moveInput > 0)
         {
+            direction = Vector2.right;
             transform.eulerAngles = new Vector3(0, 0, 0);
         }
         else if (moveInput < 0)
         {
+            direction = Vector2.left;
             transform.eulerAngles = new Vector3(0, 180, 0);
         }
+    }
+
+    public Vector2 GetDirection()
+    {
+        return direction;
     }
 
     public void ReceiveAttack(float lockedSeconds)

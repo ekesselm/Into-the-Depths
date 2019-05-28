@@ -21,7 +21,6 @@ public class EnemyGroundAttack : MonoBehaviour
         bool movingRight = GetComponent<EnemyGroundMovement>().isMovingRight();
         Vector2 direction = Vector2.left;
         if (movingRight) direction = Vector2.right;
-        Debug.Log("Empujando a la derecha? " + movingRight);
 
         // Empujón
         player.GetComponent<Movement>().ReceiveAttack(lockPlayerSeconds);

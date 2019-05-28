@@ -17,6 +17,7 @@ public class EnemyGroundMovement : MonoBehaviour
     public bool isStopped = false;
 
     private bool movingRight = true;
+    public bool dead;
 
     private void Start()
     {
@@ -31,9 +32,10 @@ public class EnemyGroundMovement : MonoBehaviour
 
     private void Movement()
     {
+        if (dead) return;
         transform.Translate(Vector2.right * speed * Time.deltaTime);
 
-        if (!Physics2D.Raycast(Limit.position, Vector2.down, 2f).collider)
+        if (HasToRotate())
         {
             if (movingRight)
             {
@@ -63,6 +65,13 @@ public class EnemyGroundMovement : MonoBehaviour
 
     }
 
+    public bool HasToRotate()
+    {
+        return !Physics2D.Raycast(Limit.position, Vector2.down, 2f).collider ||
+            Physics2D.Raycast(Limit.position, Vector2.right, 2f, LayerMask.GetMask("Ground")).collider ||
+            Physics2D.Raycast(Limit.position, Vector2.left, 2f, LayerMask.GetMask("Ground")).collider;
+    }
+
     public bool isMovingRight()
     {
         return movingRight;
@@ -82,14 +91,12 @@ public class EnemyGroundMovement : MonoBehaviour
 
     public void TurnTowardsPlayer(GameObject player)
     {
-        if (transform.position.x > player.transform.position.x) // El player está a la IZQUIERDA
+        if (transform.position.x > player.transform.position.x && !HasToRotate()) // El player está a la IZQUIERDA
         {
-            Debug.Log("Girar a la izquierda");
             RotateLeft();
         }
-        else // El player está a la DERECHA
+        else if (transform.position.x < player.transform.position.x && !HasToRotate()) // El player está a la DERECHA
         {
-            Debug.Log("Girar a la derecha");
             RotateRight();
         }
     }

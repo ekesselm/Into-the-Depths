@@ -4,54 +4,37 @@ using UnityEngine;
 
 public class PlayerDamage : MonoBehaviour
 {
+    private Animator playerAnimator;
+    private int playerDamage = 1;
+    private bool recibeDaño;
+
+    private GameObject enemy;
 
     public int bloqueoAtaque;
-
     public float fuerzaEmpujon;
-
-    public EnemyHealth vidaEnemigo;
-
-    private Animator playerAnimator;
-
-    public Animator Enemy1Anim;
-
-    private int playerDamage = 1;
-
     public GameObject player;
 
-    public GameObject Enemy;
+    public GameObject Limit;
 
-    public bool recibeDaño;
-
-    IEnumerator retardoAtaque()
+    IEnumerator RetardoAtaque()
     {
-        yield return new WaitForSeconds(bloqueoAtaque);
-        Enemy1Anim.SetBool("hit", false);
-        vidaEnemigo.enemyLife = vidaEnemigo.enemyLife - playerDamage;
-
+        yield return new WaitForSeconds(1.5f);
+        enemy.GetComponent<Animator>().SetBool("hit", false);
     }
-
 
     public void PlayerAttacks()
     {
-
-        Enemy1Anim.SetBool("hit", true);
-        StartCoroutine("retardoAtaque");
         playerAnimator.SetBool("ataque", false);
-        //Enemy.GetComponent<Rigidbody2D>().AddForce(transform.up * fuerzaEmpujon, ForceMode2D.Impulse);
-
-
+        if (enemy) { 
+            enemy.GetComponent<Animator>().SetBool("hit", true);
+            enemy.GetComponent<EnemyHealth>().enemyLife = enemy.GetComponent<EnemyHealth>().enemyLife - playerDamage;
+            StartCoroutine(RetardoAtaque());
+        }
     }
 
     void OnTriggerEnter2D(Collider2D col)
     {
-
-        if (col.transform.CompareTag("Enemy"))
-        {
-
-            recibeDaño = true;
-
-        }
+        if (col.transform.CompareTag("Enemy"))  recibeDaño = true;
     }
 
     void OnTriggerExit2D(Collider2D col)
@@ -62,45 +45,19 @@ public class PlayerDamage : MonoBehaviour
 
     void Start()
     {
-
         playerAnimator = gameObject.GetComponent<Animator>();
-        Enemy1Anim = Enemy.GetComponent<Animator>();
-
-
     }
 
     void Update()
     {
+
         if (Input.GetKeyDown(KeyCode.Q))
         {
+            RaycastHit2D enemyHit = Physics2D.Raycast(Limit.transform.position, GetComponent<Movement>().GetDirection(), 2f, LayerMask.GetMask("Enemy"));
+            Debug.DrawRay(Limit.transform.position, GetComponent<Movement>().GetDirection(), Color.green);
+            if (enemyHit) enemy = enemyHit.collider.gameObject;
             playerAnimator.SetBool("ataque", true);
         }
 
-        if (Input.GetKeyDown(KeyCode.Q) && Input.GetKeyDown(KeyCode.W))
-        {
-            playerAnimator.SetBool("ataque up", true);
-        }
-
-        if (recibeDaño == true)
-        {
-            if (Input.GetKeyDown(KeyCode.Q))
-            {
-                playerAnimator.SetBool("ataque", true);
-                Debug.Log(vidaEnemigo.enemyLife);
-                PlayerAttacks();
-                
-                 
-            }
-
-            if (Input.GetKeyDown(KeyCode.Q) && Input.GetKeyDown(KeyCode.W))
-            {
-                playerAnimator.SetBool("ataque up", true);
-                Debug.Log(vidaEnemigo.enemyLife);
-                PlayerAttacks();
-
-
-            }
-        }
-
-    }        
- }
+    }
+}  
