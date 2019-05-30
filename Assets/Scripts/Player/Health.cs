@@ -30,6 +30,7 @@ public class Health : MonoBehaviour
 
     void Start()
     {
+
         whiteScreen.canvasRenderer.SetAlpha(1.0f);
         FadeOut();
         LoadData();
@@ -70,8 +71,9 @@ public class Health : MonoBehaviour
         yield return new WaitForSecondsRealtime(0.5f);
         Time.timeScale = 0;
         FadeIn();
-        yield return new WaitForSecondsRealtime(4f);
+        yield return new WaitForSecondsRealtime(3f);
         SceneManager.LoadScene(escenaActual.name);
+        Time.timeScale = 1;
 
     }
 
