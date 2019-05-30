@@ -26,8 +26,8 @@ public class EnemyGroundAttack : MonoBehaviour
 
         // Empujón
         player.GetComponent<Movement>().ReceiveAttack(lockPlayerSeconds);
-        
         player.GetComponent<Rigidbody2D>().AddForce(direction * fuerzaEmpujon, ForceMode2D.Impulse);
+        playerAnim.SetBool("playerHit", false);
         StartCoroutine("RetardoVida");
 
     }
@@ -40,7 +40,6 @@ public class EnemyGroundAttack : MonoBehaviour
     IEnumerator tiempoEsperaAtaque()
     {
         yield return new WaitForSeconds(tiempoAtaque);
-        playerAnim.SetBool("playerHit", false);
         GetComponent<EnemyGroundMovement>().isAttacking = false;
 
     }

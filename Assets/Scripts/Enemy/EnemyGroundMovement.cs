@@ -91,6 +91,7 @@ public class EnemyGroundMovement : MonoBehaviour
 
     public void TurnTowardsPlayer(GameObject player)
     {
+        if (dead == false){ 
         if (transform.position.x > player.transform.position.x && !HasToRotate()) // El player está a la IZQUIERDA
         {
             RotateLeft();
@@ -98,6 +99,8 @@ public class EnemyGroundMovement : MonoBehaviour
         else if (transform.position.x < player.transform.position.x && !HasToRotate()) // El player está a la DERECHA
         {
             RotateRight();
+        }
+
         }
     }
 
