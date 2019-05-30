@@ -10,14 +10,16 @@ public class Health : MonoBehaviour
     public int Life = 4;
     private Animator animator;
 
+    public Image whiteScreen;
+
     public GameObject c1;
     public GameObject c2;
     public GameObject c3;
     public GameObject c4;
 
-    public float x;
-    public float y;
-    public float z;
+    private float x;
+    private float y;
+    private float z;
 
     Scene escenaActual;
 
@@ -28,11 +30,23 @@ public class Health : MonoBehaviour
 
     void Start()
     {
+        whiteScreen.canvasRenderer.SetAlpha(1.0f);
+        FadeOut();
+        LoadData();
         animator = GetComponent<Animator>();
         escenaActual = SceneManager.GetActiveScene();
-        LoadData();
         InvokeRepeating("LastRespawn", 5f, waitTime);
 
+    }
+
+    public void FadeIn()
+    {
+        whiteScreen.CrossFadeAlpha(1.0f, 2.0f, true);
+    }
+
+    public void FadeOut()
+    {
+        whiteScreen.CrossFadeAlpha(0.0f, 2.0f, true);
     }
 
     /*IEnumerator SaveRespawn()
@@ -46,17 +60,20 @@ public class Health : MonoBehaviour
         yield return waitForSecondsRealtime;
 
         Debug.Log("End waiting: " + Time.realtimeSinceStartup);
-    }
-    
+    }*/
+
     //si pasa waitTime, el contador se resetea y se ejecuta LastRespawn...
 
-    IEnumerator tiempoRespawneo()
+    IEnumerator GameOver()
     {
-        print(Time.time);
-        yield return new WaitForSeconds(waitTime);
-        LastRespawn();
-        print(Time.time);
-    }*/
+        animator.SetBool("muerte", true);
+        yield return new WaitForSecondsRealtime(0.5f);
+        Time.timeScale = 0;
+        FadeIn();
+        yield return new WaitForSecondsRealtime(4f);
+        SceneManager.LoadScene(escenaActual.name);
+
+    }
 
     void Update()
     {
@@ -104,13 +121,18 @@ public class Health : MonoBehaviour
         }
 
 
-        if (Life <= 0)
+        if (Life == 0)
         {
-
-            SceneManager.LoadScene(escenaActual.name);
+            c4.SetActive(false);
+            c3.SetActive(false);
+            c2.SetActive(false);
+            c1.SetActive(false);
+            StartCoroutine(GameOver()); 
 
         }
     }
+
+    
 
     void LastRespawn()
     {
