@@ -12,6 +12,8 @@ public class EnemyGroundAttack : MonoBehaviour
     public Health playerHealth;
     public float lockPlayerSeconds = 1f;
 
+    public Animator playerAnim;
+
     private GameObject player;
     private Animator Enemy1Animator;
     
@@ -24,9 +26,10 @@ public class EnemyGroundAttack : MonoBehaviour
 
         // Empujón
         player.GetComponent<Movement>().ReceiveAttack(lockPlayerSeconds);
+        
         player.GetComponent<Rigidbody2D>().AddForce(direction * fuerzaEmpujon, ForceMode2D.Impulse);
         StartCoroutine("RetardoVida");
-        
+
     }
 
     void Start()
@@ -37,13 +40,14 @@ public class EnemyGroundAttack : MonoBehaviour
     IEnumerator tiempoEsperaAtaque()
     {
         yield return new WaitForSeconds(tiempoAtaque);
+        playerAnim.SetBool("playerHit", false);
         GetComponent<EnemyGroundMovement>().isAttacking = false;
 
     }
 
     IEnumerator RetardoVida()
     {
-        new WaitForSeconds(1.5f);
+        new WaitForSeconds(2f);
         playerHealth.Life -= enemyDamage;
         yield return new WaitForSeconds(0.1f);
 
@@ -54,7 +58,9 @@ public class EnemyGroundAttack : MonoBehaviour
         if (col.transform.CompareTag("Player"))
         {
             Enemy1Animator.SetBool("atacar", true);
+
             GetComponent<EnemyGroundMovement>().isAttacking = true;
+            playerAnim.SetBool("playerHit", true);
             player = col.gameObject;
             StartCoroutine("tiempoEsperaAtaque");
 

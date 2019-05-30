@@ -23,7 +23,7 @@ public class Spikes : MonoBehaviour {
 
     IEnumerator tiempoEsperaAtaque()
     {
-        new WaitForSeconds(1.5f);
+        new WaitForSeconds(2f);
         yield return new WaitForSeconds(0.1f);
 
     }
