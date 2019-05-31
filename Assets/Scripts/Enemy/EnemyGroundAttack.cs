@@ -12,6 +12,8 @@ public class EnemyGroundAttack : MonoBehaviour
     public Health playerHealth;
     public float lockPlayerSeconds = 1f;
 
+    private bool movingRight = true;
+
     public Animator playerAnim;
 
     private GameObject player;
