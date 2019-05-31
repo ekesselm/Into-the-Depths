@@ -8,6 +8,7 @@ public class AirEnemy : MonoBehaviour
     public Vector3 target;
     public Vector3 playerPos;
 
+
     public Health playerHealth;
 
     public bool Attacking;
@@ -59,6 +60,7 @@ public class AirEnemy : MonoBehaviour
             StartCoroutine("CooldownAtaque");
             StartCoroutine("CooldownDos");
             AttackCheck = true;
+            Debug.Log("AYYYYYYY");
             playerPos = player.transform.position;
             target = playerPos;
 
