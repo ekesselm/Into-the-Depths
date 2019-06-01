@@ -8,10 +8,14 @@ public class AirEnemy : MonoBehaviour
     public Vector3 target;
     public Vector3 playerPos;
 
+    public Vector3 Limit1;
+    public Vector3 Limit2;
 
     public Health playerHealth;
 
     public bool Attacking;
+
+    public bool limitsLimiter;
 
     public bool AttackCheck;
 
@@ -23,9 +27,10 @@ public class AirEnemy : MonoBehaviour
     {
         OriginalPos = transform.position;
         target = OriginalPos;
-       
+        Limit1 = OriginalPos;
         AttackCheck = false;
         Attacking = true;
+        limitsLimiter = true;
 
     }
 
@@ -34,6 +39,7 @@ public class AirEnemy : MonoBehaviour
         if (collision.transform.CompareTag("Player")){
             AttackCheck = false;
             playerHealth.Life -= 1;
+            limitsLimiter = true;
         }
         
     }
@@ -72,6 +78,7 @@ public class AirEnemy : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(1f);
         AttackCheck = false;
+        limitsLimiter = true;
     }
 
     IEnumerator CooldownAtaque()
@@ -84,8 +91,20 @@ public class AirEnemy : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (Attacking == false && AttackCheck == false)
+        if (AttackCheck == false && limitsLimiter)
         {
+            
+            if (transform.position == Limit1)
+            {
+                OriginalPos = Limit2;
+
+                //limitsLimiter = false;
+            }
+            if (transform.position == Limit2)
+            {
+                OriginalPos = Limit1;
+                //limitsLimiter = false;
+            }
             target = OriginalPos;
         }
 
