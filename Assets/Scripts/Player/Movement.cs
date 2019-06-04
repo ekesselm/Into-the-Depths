@@ -69,6 +69,11 @@ public class Movement : MonoBehaviour
                 jumpTimeCounter -= 1*Time.deltaTime;
             } 
         }
+        else
+        {
+            animator.SetBool("saltar", false);
+            needPressJumpButtonAgain = false;
+        }
 
         // Restart jump
         if (jumpInput == 0) needPressJumpButtonAgain = false;

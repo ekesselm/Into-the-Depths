@@ -21,7 +21,7 @@ public class AirEnemy : MonoBehaviour
 
     public GameObject player;
 
-    public int speed;
+    public float speed;
 
     private void Start()
     {

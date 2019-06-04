@@ -11,9 +11,14 @@ public class BossScript : MonoBehaviour
 
     private int siSaleUnoSalto;
 
+    public Vector3 target;
+
     private Animator bossAnim;
     private Rigidbody2D bossRB;
     private RigidbodyType2D bodyType;
+
+    public Transform Limite1;
+    public Transform Limite2;
 
     public CapsuleCollider2D colDormido;
     public CapsuleCollider2D col1;
@@ -21,12 +26,18 @@ public class BossScript : MonoBehaviour
 
     public bool sleep;
 
+    public bool puedoRodar;
+
+    public bool haciaElPrimero;
+
     public bool movingRight;
 
     public int determinanteDerecha;
     public bool saltoVoyQueSaltoSalto;
 
     public bool canAttack;
+
+    public int puedoHacermeBola;
 
     public bool noSaltesMas;
 
@@ -46,6 +57,8 @@ public class BossScript : MonoBehaviour
 
     public bool movimientoDer;
     public bool movimientoIzq;
+
+ 
 
     // Start is called before the first frame update
 
@@ -104,8 +117,6 @@ public class BossScript : MonoBehaviour
         {
             determinanteDerecha = Random.Range(0, 2);
         }
-
-
 
         //salto a la derecha
         if (determinanteDerecha == 0){
@@ -203,12 +214,45 @@ public class BossScript : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (sleep == false && noSaltesMas == true){
+
+        if (sleep == false && siSaleUnoSalto != 1 && puedoRodar == false)
+        {
+            puedoHacermeBola = Random.Range(0, 300);
+        }
+        
+        if (puedoRodar)
+        {
+            haciaElPrimero = true;
+            transform.Rotate(0, 0, 30);
+            if (haciaElPrimero)
+            {
+                if (transform.position == Limite1.position)
+                {
+                    target = Limite2.position;
+                }
+
+                if (transform.position == Limite2.position)
+                {
+                    target = Limite1.position;
+                }
+
+                transform.position = Vector3.MoveTowards(transform.position, target, 0.3f);
+
+            }
+
+        }
+
+        if (sleep == false && noSaltesMas == true && puedoHacermeBola != 1 && puedoRodar == false){
             siSaleUnoSalto = Random.Range(0, 100);
         }
     }
     void Update()
     {
+        if (puedoHacermeBola == 1) {
+            AtaqueBola();
+            puedoHacermeBola = 3;
+        }
+
         if (siSaleUnoSalto == 1)
         {
             siSaleUnoSalto = 3;
@@ -238,7 +282,7 @@ public class BossScript : MonoBehaviour
                 voyaCaer = false;
             }
         }
-
+        
         if (sleep)
         {
             bossRB.bodyType = RigidbodyType2D.Static;
@@ -254,19 +298,32 @@ public class BossScript : MonoBehaviour
         }
     }
 
+    private void AtaqueBola()
+    {
+        bossAnim.SetBool("ballAttack", true);
+        puedoRodar = true;
+        StartCoroutine("cdbola");
+        target = Limite1.position;
+    }
+
     public void TurnTowardsPlayer()
     {
-        if (sleep == false) { 
+        if (sleep == false && puedoRodar == false) { 
             if (transform.position.x > player.transform.position.x) // El player está a la IZQUIERDA
             {
-                transform.eulerAngles = new Vector3(0, -180, 0);
+                transform.eulerAngles = new Vector3(0, -180);
             }
             else if (transform.position.x < player.transform.position.x) // El player está a la DERECHA
             {
-                transform.eulerAngles = new Vector3(0, 0, 0);
+                transform.eulerAngles = new Vector3(0, 0);
         }
       }
 
     }
-
+    IEnumerator cdbola(){
+        Debug.Log("aaaaaaaaaaaaaa");
+        yield return new WaitForSecondsRealtime(4f);
+        bossAnim.SetBool("ballAttack", false);
+        puedoRodar = false;
+    }
 }
