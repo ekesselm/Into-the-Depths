@@ -12,12 +12,12 @@ public class Movement : MonoBehaviour
     public float jumpForce;
 
     public bool isGrounded;
+
     public Transform feetPos;
+
     public float checkRadius;
     public LayerMask whatisGround;
-
     public float jumpTime;
-    public bool notJumping;
 
     private Animator animator;
     private float moveInput;
@@ -29,12 +29,17 @@ public class Movement : MonoBehaviour
     private bool canJump;
     private Vector2 direction;
 
+    public GameObject dustEffect;
+    public bool spawnDust;
 
+    public bool dustLimiter;
+    
     void Start()
     {
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         locked = false;
+
     }
 
     void FixedUpdate()
@@ -43,6 +48,19 @@ public class Movement : MonoBehaviour
         jumpInput = Input.GetAxisRaw("Vertical");
 
         if (!locked) rb.velocity = new Vector2(moveInput * speed, rb.velocity.y);
+
+        //particles
+
+        if (isGrounded == true)
+        {
+            if (spawnDust == true && dustLimiter == true)
+            {
+                Instantiate(dustEffect, feetPos.position, Quaternion.identity);
+                spawnDust = false;
+            }
+
+
+        }
     }
 
     public bool IsGrounded()
@@ -50,7 +68,40 @@ public class Movement : MonoBehaviour
         return Physics2D.OverlapCircle(feetPos.position, checkRadius, whatisGround);
     }
 
-    void Update() { 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        dustLimiter = true;
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        isGrounded = true;
+        dustLimiter = true;
+
+        if (moveInput < 0)
+        {
+            spawnDust = true;
+        }
+
+        if (moveInput > 0)
+        {
+            spawnDust = true;
+        }
+    }
+
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        dustLimiter = false;
+
+        if (jumpInput < 0){
+
+            isGrounded = false;
+        }
+    }
+
+    void Update() {
+
         canJump = IsGrounded() && jumpInput > 0 && !needPressJumpButtonAgain;
         MoveAnimation();
 
@@ -60,13 +111,15 @@ public class Movement : MonoBehaviour
             jumpTimeCounter = jumpTime;
         }
         
-        if (jumpInput > 0)
+        if (jumpInput > 0 && isGrounded && needPressJumpButtonAgain)
         {
             animator.SetBool("saltar", true);
 
             if (jumpTimeCounter > 0){
+
                 rb.velocity = Vector2.up * jumpForce;
                 jumpTimeCounter -= 1*Time.deltaTime;
+                spawnDust = true;
             } 
         }
         else

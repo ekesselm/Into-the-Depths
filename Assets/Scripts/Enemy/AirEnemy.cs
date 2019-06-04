@@ -15,6 +15,8 @@ public class AirEnemy : MonoBehaviour
 
     public bool Attacking;
 
+    public bool GiraGira;
+
     public bool limitsLimiter;
 
     public bool AttackCheck;
@@ -23,8 +25,15 @@ public class AirEnemy : MonoBehaviour
 
     public float speed;
 
+    private Animator Enemy2Anim;
+
+    private SpriteRenderer spriteRen;
+
     private void Start()
     {
+
+        Enemy2Anim = GetComponent<Animator>();
+        spriteRen = GetComponent<SpriteRenderer>();
         OriginalPos = transform.position;
         target = OriginalPos;
         Limit1 = OriginalPos;
@@ -36,10 +45,12 @@ public class AirEnemy : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+
         if (collision.transform.CompareTag("Player")){
             AttackCheck = false;
             playerHealth.Life -= 1;
             limitsLimiter = true;
+    
         }
         
     }
@@ -59,25 +70,15 @@ public class AirEnemy : MonoBehaviour
 
     }*/
 
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (collision.transform.CompareTag("Player") && Attacking)
-        {
-            StartCoroutine("CooldownAtaque");
-            StartCoroutine("CooldownDos");
-            AttackCheck = true;
-            Debug.Log("AYYYYYYY");
-            playerPos = player.transform.position;
-            target = playerPos;
-
-        }
-    }
+   
 
 
         IEnumerator CooldownDos()
     {
         yield return new WaitForSecondsRealtime(1f);
         AttackCheck = false;
+        Enemy2Anim.SetBool("playerAround", false);
+        GiraGira = true;
         limitsLimiter = true;
     }
 
@@ -89,26 +90,69 @@ public class AirEnemy : MonoBehaviour
 
     }
 
+
     private void FixedUpdate()
     {
+        if (GiraGira == true)
+        {
+            if (OriginalPos == Limit1)
+            {
+                spriteRen.flipX = true;
+            }
+            else
+            {
+                spriteRen.flipX = false;
+            }
+        }
+
         if (AttackCheck == false && limitsLimiter)
         {
             
             if (transform.position == Limit1)
             {
                 OriginalPos = Limit2;
-
+                spriteRen.flipX = false;
                 //limitsLimiter = false;
             }
             if (transform.position == Limit2)
             {
                 OriginalPos = Limit1;
+                spriteRen.flipX = true;
                 //limitsLimiter = false;
             }
             target = OriginalPos;
         }
 
+
         transform.position = Vector3.MoveTowards(transform.position, target, speed);
 
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+
+        if (collision.transform.CompareTag("Player") && Attacking)
+        {
+            GiraGira = false; 
+            StartCoroutine("CooldownAtaque");
+            StartCoroutine("CooldownDos");
+            AttackCheck = true;
+
+            Enemy2Anim.SetBool("playerAround", true);
+
+            Debug.Log("AYYYYYYY");
+            playerPos = player.transform.position;
+            target = playerPos;
+
+            if (transform.position.x < player.transform.position.x && target == playerPos)
+            {
+                spriteRen.flipX = true;
+            }
+            else
+            {
+                spriteRen.flipX = false;
+            }
+
+        }
     }
 }
