@@ -12,6 +12,9 @@ public class AirEnemy : MonoBehaviour
     public Vector3 Limit2;
 
     public Health playerHealth;
+    public float lockPlayerSeconds = 1f;
+    public Animator playerAnim;
+    public bool movingRight;
 
     public bool Attacking;
 
@@ -29,6 +32,19 @@ public class AirEnemy : MonoBehaviour
 
     private SpriteRenderer spriteRen;
 
+    public void Empujon()
+    {
+        // Detectar hacia que lado dar el empujón
+        Vector2 direction = Vector2.right;
+        if (movingRight) direction = Vector2.left;
+
+        // Empujón
+        player.GetComponent<Movement>().ReceiveAttack(lockPlayerSeconds);
+        player.GetComponent<Rigidbody2D>().AddForce(direction * 30, ForceMode2D.Impulse);
+        StartCoroutine("RetardoVida");
+
+    }
+
     private void Start()
     {
 
@@ -43,12 +59,22 @@ public class AirEnemy : MonoBehaviour
 
     }
 
+    IEnumerator RetardoVida()
+    {
+        new WaitForSecondsRealtime(4f);
+        playerHealth.Life -= 1;
+        yield return new WaitForSeconds(0.1f);
+        playerAnim.SetBool("playerHit", false);
+
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
 
         if (collision.transform.CompareTag("Player")){
+            playerAnim.SetBool("playerHit", true);
+            Empujon();
             AttackCheck = false;
-            playerHealth.Life -= 1;
             limitsLimiter = true;
     
         }
@@ -111,6 +137,7 @@ public class AirEnemy : MonoBehaviour
             if (transform.position == Limit1)
             {
                 OriginalPos = Limit2;
+                movingRight = true;
                 spriteRen.flipX = false;
                 //limitsLimiter = false;
             }
@@ -118,6 +145,7 @@ public class AirEnemy : MonoBehaviour
             {
                 OriginalPos = Limit1;
                 spriteRen.flipX = true;
+                movingRight = false;
                 //limitsLimiter = false;
             }
             target = OriginalPos;
@@ -140,7 +168,6 @@ public class AirEnemy : MonoBehaviour
 
             Enemy2Anim.SetBool("playerAround", true);
 
-            Debug.Log("AYYYYYYY");
             playerPos = player.transform.position;
             target = playerPos;
 
