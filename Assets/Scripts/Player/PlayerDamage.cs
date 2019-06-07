@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerDamage : MonoBehaviour
 {
     private Animator playerAnimator;
-    private int playerDamage = 999;
+    private int playerDamage = 1;
     private bool recibeDano;
 
     private GameObject enemy;
@@ -27,8 +27,6 @@ public class PlayerDamage : MonoBehaviour
         playerAnimator.SetBool("ataque", false);
 
         if (enemy) {
-
-            Debug.Log(enemy.GetComponent<EnemyHealth>().enemyLife);
 
             enemy.GetComponent<Animator>().SetBool("hit", true);
             enemy.GetComponent<EnemyHealth>().enemyLife = enemy.GetComponent<EnemyHealth>().enemyLife - playerDamage;
