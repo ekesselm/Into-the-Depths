@@ -22,6 +22,13 @@ public class draggableIcons : MonoBehaviour
 
     void Start()
     {
+        if (gameObject.name.Contains("(Clone)")) {
+            isPrefab = true;
+        } else
+        {
+            isPrefab = false;
+        }
+
         cam = Camera.main;
     }
     public void OnMouseOver()
@@ -32,8 +39,11 @@ public class draggableIcons : MonoBehaviour
     public void OnMouseDown()
     {
         //El icono seleccionado se vuelve el cursor hasta que lo sueltes
+        if(isPrefab == false){
+
         Cursor.SetCursor(iconoEnemigo, hotSpot, cursorMode);
-        Debug.Log("auauauauau");
+
+        }
     }
 
     void OnGUI()
@@ -51,9 +61,11 @@ public class draggableIcons : MonoBehaviour
     }   
     void OnMouseUp()
     {
-        //Si entra en el mapa, instancia en posición donde se arrastre.
+        if (isPrefab == false)
+        {
+            //Si entra en el mapa, instancia en posición donde se arrastre.
 
-        Cursor.SetCursor(null, Vector2.zero, cursorMode);
+            Cursor.SetCursor(null, Vector2.zero, cursorMode);
         if (mapa.iconInMap)
         {
             gameObject.transform.SetParent(mapaPos);
@@ -63,11 +75,14 @@ public class draggableIcons : MonoBehaviour
         {
            // Destroy(gameObject);
         }
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Destroy()
     {
-
+        if (isPrefab)
+        {
+            Destroy(gameObject);
+        }
     }
 }

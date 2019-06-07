@@ -8,6 +8,8 @@ public class AirEnemy : MonoBehaviour
     public Vector3 target;
     public Vector3 playerPos;
 
+    public bool dead;
+
     public Vector3 Limit1;
     public Vector3 Limit2;
 
@@ -68,7 +70,7 @@ public class AirEnemy : MonoBehaviour
 
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionStay2D(Collision2D collision) 
     {
 
         if (collision.transform.CompareTag("Player")){
@@ -148,6 +150,7 @@ public class AirEnemy : MonoBehaviour
                 movingRight = false;
                 //limitsLimiter = false;
             }
+
             target = OriginalPos;
         }
 

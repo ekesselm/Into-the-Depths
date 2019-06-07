@@ -7,7 +7,7 @@ public class EnemyHealth : MonoBehaviour
     public int enemyLife = 3;
     private Animator EnemyAnim;
 
-    public void DieBitch()
+    public void Die()
     {
 
         Destroy(gameObject);
@@ -22,9 +22,12 @@ public class EnemyHealth : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(enemyLife);
+
         if (enemyLife <= 0)
         {
             GetComponent<EnemyGroundMovement>().dead = true;
+            GetComponent<AirEnemy>().dead = true;
             EnemyAnim.SetBool("muerte", true); 
         }
     }
