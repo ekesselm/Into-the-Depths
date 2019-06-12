@@ -31,6 +31,7 @@ public class PlayerDamage : MonoBehaviour
             enemy.GetComponent<Animator>().SetBool("hit", true);
             enemy.GetComponent<EnemyHealth>().enemyLife = enemy.GetComponent<EnemyHealth>().enemyLife - playerDamage;
             StartCoroutine(RetardoAtaque());
+            Debug.Log("HAY IMPACTO");
         }
     }
 

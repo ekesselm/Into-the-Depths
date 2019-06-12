@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BossScript : MonoBehaviour
 {
+
     public float tiempoAtaque = 0.60f;
     public bool isAttacking = false;
 
@@ -58,7 +59,7 @@ public class BossScript : MonoBehaviour
     public bool movimientoDer;
     public bool movimientoIzq;
 
- 
+
 
     // Start is called before the first frame update
 
@@ -76,19 +77,22 @@ public class BossScript : MonoBehaviour
         sleep = true;
         movimientoDer = false;
         movimientoIzq = false;
-}
+    }
 
     private void Ataque()
     {
-        if (canAttack){
+        if (canAttack)
+        {
+            isAttacking = true;
+            Debug.Log("ATAQUENTRATAQUENTRA");
+          //  StartCoroutine("RetardoVida");
+            //playerHealth.Life -= 1;
+            bossAnim.SetBool("ataqueCerca", true);
+            StartCoroutine("tiempoEsperaAtaque");
 
-        //StartCoroutine("RetardoVida");
-        bossAnim.SetBool("ataqueCerca", true);
-        StartCoroutine("tiempoEsperaAtaque");
-
-        movingRight = true;
-        Vector2 direction = Vector2.left;
-        if (movingRight) direction = Vector2.right;
+            movingRight = true;
+            Vector2 direction = Vector2.left;
+            if (movingRight) direction = Vector2.right;
 
             // Empujón
             //player.GetComponent<Movement>().ReceiveAttack(lockPlayerSeconds);
@@ -98,11 +102,13 @@ public class BossScript : MonoBehaviour
 
     private void Saltito()
     {
-        if (movimientoDer) {
+        if (movimientoDer)
+        {
 
             determinanteDerecha = 0;
 
-        } else if (movimientoIzq == false)
+        }
+        else if (movimientoIzq == false)
         {
             determinanteDerecha = Random.Range(0, 2);
         }
@@ -119,9 +125,10 @@ public class BossScript : MonoBehaviour
         }
 
         //salto a la derecha
-        if (determinanteDerecha == 0){
+        if (determinanteDerecha == 0)
+        {
 
-        Debug.Log("DESPEGUE");
+            Debug.Log("DESPEGUE");
 
             AquiSalto.x = (Random.Range(transform.position.x + 5f, transform.position.x + 9f));
             posSalto.x = (AquiSalto.x + transform.position.x) / 2;
@@ -154,46 +161,51 @@ public class BossScript : MonoBehaviour
 
     IEnumerator RetardoVida()
     {
-        if (canAttack) {
+        if (canAttack)
+        {
 
             playerAnim.SetBool("playerHit", true);
             playerHealth.Life -= 1;
             //new WaitForSeconds(1f);
-            yield return new WaitForSeconds(0.13f);
+            yield return new WaitForSecondsRealtime(0.13f);
             playerAnim.SetBool("playerHit", false);
+            canAttack = false;
         }
     }
 
     IEnumerator tiempoEsperaAtaque()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSecondsRealtime(1f);
         bossAnim.SetBool("ataqueCerca", false);
         isAttacking = false;
-        yield return new WaitForSeconds(0.3f);
+
+        yield return new WaitForSecondsRealtime(0.3f);
 
     }
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-      if (sleep == false) { 
-        if (col.transform.CompareTag("Player"))
+        if (sleep == false)
         {
-            //float esperaParaAtacar = Random.Range(1f, 4f);
-            Invoke("Ataque", Random.Range(1f, 4f));
+            if (col.transform.CompareTag("Player"))
+            {
+                //float esperaParaAtacar = Random.Range(1f, 4f);
+                canAttack = true;
+                Invoke("Ataque", Random.Range(1f, 4f));
+            }
         }
-      }
     }
 
-    private void OnTriggerStay2D(Collider2D col)
+    /*private void OnTriggerStay2D(Collider2D col)
     {
         if (sleep == false)
         {
             if (col.transform.CompareTag("Player"))
             {
-                canAttack = true;
+                
             }
         }
-    }
+    }*/
 
     private void OnTriggerExit2D(Collider2D col)
     {
@@ -219,7 +231,7 @@ public class BossScript : MonoBehaviour
         {
             puedoHacermeBola = Random.Range(0, 300);
         }
-        
+
         if (puedoRodar)
         {
             haciaElPrimero = true;
@@ -242,21 +254,24 @@ public class BossScript : MonoBehaviour
 
         }
 
-        if (sleep == false && noSaltesMas == true && puedoHacermeBola != 1 && puedoRodar == false){
+        if (sleep == false && noSaltesMas == true && puedoHacermeBola != 1 && puedoRodar == false)
+        {
             siSaleUnoSalto = Random.Range(0, 100);
         }
     }
     void Update()
     {
-        if (puedoHacermeBola == 1) {
+        if (puedoHacermeBola == 1)
+        {
             AtaqueBola();
             puedoHacermeBola = 3;
         }
 
-        if (siSaleUnoSalto == 1)
+        if (siSaleUnoSalto == 1 && canAttack == false && isAttacking == false)
         {
             siSaleUnoSalto = 3;
             Saltito();
+            ////////////////////////////////////////////////////
         }
 
         TurnTowardsPlayer();
@@ -282,15 +297,17 @@ public class BossScript : MonoBehaviour
                 voyaCaer = false;
             }
         }
-        
+
         if (sleep)
         {
             bossRB.bodyType = RigidbodyType2D.Static;
             col1.enabled = false;
             col2.enabled = false;
             colDormido.enabled = true;
-        } else {
- 
+        }
+        else
+        {
+
             bossRB.bodyType = RigidbodyType2D.Kinematic;
             col1.enabled = true;
             col2.enabled = true;
@@ -308,7 +325,8 @@ public class BossScript : MonoBehaviour
 
     public void TurnTowardsPlayer()
     {
-        if (sleep == false && puedoRodar == false) { 
+        if (sleep == false && puedoRodar == false)
+        {
             if (transform.position.x > player.transform.position.x) // El player está a la IZQUIERDA
             {
                 transform.eulerAngles = new Vector3(0, -180);
@@ -316,11 +334,12 @@ public class BossScript : MonoBehaviour
             else if (transform.position.x < player.transform.position.x) // El player está a la DERECHA
             {
                 transform.eulerAngles = new Vector3(0, 0);
+            }
         }
-      }
 
     }
-    IEnumerator cdbola(){
+    IEnumerator cdbola()
+    {
         Debug.Log("aaaaaaaaaaaaaa");
         yield return new WaitForSecondsRealtime(4f);
         bossAnim.SetBool("ballAttack", false);

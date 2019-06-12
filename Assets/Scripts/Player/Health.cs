@@ -30,7 +30,7 @@ public class Health : MonoBehaviour
 
     void Start()
     {
-
+        player.transform.position = new Vector3(0, -85, 0);
         whiteScreen.canvasRenderer.SetAlpha(1.0f);
         FadeOut();
         LoadData();
@@ -68,7 +68,7 @@ public class Health : MonoBehaviour
     IEnumerator GameOver()
     {
         animator.SetBool("muerte", true);
-        yield return new WaitForSecondsRealtime(0.5f);
+        yield return new WaitForSecondsRealtime(0.2f);
         Time.timeScale = 0;
         FadeIn();
         yield return new WaitForSecondsRealtime(3f);

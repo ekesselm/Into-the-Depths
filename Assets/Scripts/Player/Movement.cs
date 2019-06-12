@@ -113,6 +113,7 @@ public class Movement : MonoBehaviour
         
         if (jumpInput > 0 && isGrounded && needPressJumpButtonAgain)
         {
+            Instantiate(dustEffect, feetPos.position, Quaternion.identity);
             animator.SetBool("saltar", true);
 
             if (jumpTimeCounter > 0){

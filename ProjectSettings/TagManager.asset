@@ -8,6 +8,8 @@ TagManager:
   - Ground
   - Enemy
   - UIDraggable
+  - Grass
+  - DetectorHierba
   layers:
   - Default
   - TransparentFX
@@ -23,7 +25,7 @@ TagManager:
   - Camera
   - Lights
   - BG
-  - 
+  - Environment
   - 
   - 
   - 

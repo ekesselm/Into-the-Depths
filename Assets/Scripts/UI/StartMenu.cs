@@ -7,6 +7,7 @@ public class StartMenu : MonoBehaviour
 {
     public GameObject startPanel;
     public static bool gameIsPaused = false;
+    public GameObject FadePanel;
 
     // Start is called before the first frame update
     void Start()
@@ -24,6 +25,7 @@ public class StartMenu : MonoBehaviour
                 Resume();
             } else {
                 Pause();
+                FadePanel.SetActive(false);
             }
         }
     }

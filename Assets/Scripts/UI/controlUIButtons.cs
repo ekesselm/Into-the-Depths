@@ -8,20 +8,38 @@ public class controlUIButtons : MonoBehaviour
     public Animator fade;
     public GameObject FadePanel;
 
+    
+
+   /* public static string PreviousScene = "";
+
+    public void LoadScene(string sceneName)
+    {
+        PreviousScene = SceneManager.GetActiveScene().name;
+        SceneManager.LoadScene(sceneName);
+    }*/
+
+
     // Start is called before the first frame update
     void Start()
     {
-        fade = GameObject.Find("FadePanel").GetComponent<Animator>();
-        //fade = GetComponent<Animator>();
-        FadePanel.SetActive(false);
+
+          
+     
+    } 
+
+   
+
+    public void MenuPrincipal()
+    {
+        SceneManager.LoadScene("Menus");
     }
 
     public void NuevaPartida()
     {
+        PlayerPrefs.DeleteAll();
         SceneManager.LoadScene("Level 1");
-    }
 
-    
+    }
 
     public void Fade()
     {
@@ -32,7 +50,8 @@ public class controlUIButtons : MonoBehaviour
 
     public void CerrarPartida()
     {
-            Application.Quit();
+        PlayerPrefs.DeleteAll();
+        Application.Quit();
     }
 
     IEnumerator EsperaQueFade()

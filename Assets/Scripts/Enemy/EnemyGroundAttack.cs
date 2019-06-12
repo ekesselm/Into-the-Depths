@@ -6,7 +6,7 @@ using UnityEngine;
 public class EnemyGroundAttack : MonoBehaviour
 {
 
-    public float tiempoAtaque = 0.60f;
+    public float tiempoAtaque = 1f;
     public float fuerzaEmpujon;
     public int enemyDamage = 1;
     public Health playerHealth;
@@ -29,7 +29,6 @@ public class EnemyGroundAttack : MonoBehaviour
         // Empujón
         player.GetComponent<Movement>().ReceiveAttack(lockPlayerSeconds);
         player.GetComponent<Rigidbody2D>().AddForce(direction * fuerzaEmpujon, ForceMode2D.Impulse);
-        playerAnim.SetBool("playerHit", false);
         StartCoroutine("RetardoVida");
 
     }
@@ -41,8 +40,11 @@ public class EnemyGroundAttack : MonoBehaviour
 
     IEnumerator tiempoEsperaAtaque()
     {
+        playerAnim.SetBool("playerHit", true);
         yield return new WaitForSeconds(tiempoAtaque);
         GetComponent<EnemyGroundMovement>().isAttacking = false;
+        yield return new WaitForSeconds(0.1f);
+        playerAnim.SetBool("playerHit", false);
 
     }
 
@@ -61,7 +63,6 @@ public class EnemyGroundAttack : MonoBehaviour
             Enemy1Animator.SetBool("atacar", true);
 
             GetComponent<EnemyGroundMovement>().isAttacking = true;
-            playerAnim.SetBool("playerHit", true);
             player = col.gameObject;
             StartCoroutine("tiempoEsperaAtaque");
 
