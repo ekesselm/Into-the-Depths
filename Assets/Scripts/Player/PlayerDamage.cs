@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class PlayerDamage : MonoBehaviour
 {
+    public BoxCollider2D colTop;
+    public BoxCollider2D colSide;
+
     private Animator playerAnimator;
     private int playerDamage = 1;
     private bool recibeDano;
@@ -22,8 +25,27 @@ public class PlayerDamage : MonoBehaviour
         enemy.GetComponent<Animator>().SetBool("hit", false);
     }
 
-    public void PlayerAttacks()
+    public void PlayerAttacksTop()
     {
+        colTop.enabled = true;
+        colSide.enabled = false;
+        //colTop.enabled = !colSide.enabled;
+        playerAnimator.SetBool("ataque up", false);
+
+        if (enemy)
+        {
+            enemy.GetComponent<Animator>().SetBool("hit", true);
+            enemy.GetComponent<EnemyHealth>().enemyLife = enemy.GetComponent<EnemyHealth>().enemyLife - playerDamage;
+            StartCoroutine(RetardoAtaque());
+            Debug.Log("HAY IMPACTO");
+        }
+    }
+
+    public void PlayerAttacksSide()
+    {
+        colSide.enabled = true;
+        colTop.enabled = false;
+        //colSide.enabled = !colTop.enabled;
         playerAnimator.SetBool("ataque", false);
 
         if (enemy) {
@@ -60,6 +82,14 @@ public class PlayerDamage : MonoBehaviour
             Debug.DrawRay(Limit.transform.position, GetComponent<Movement>().GetDirection(), Color.green);
             if (enemyHit) enemy = enemyHit.collider.gameObject;
             playerAnimator.SetBool("ataque", true);
+        }
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            RaycastHit2D enemyHit = Physics2D.Raycast(Limit.transform.position, GetComponent<Movement>().GetDirection(), 2f, LayerMask.GetMask("Enemy"));
+            Debug.DrawRay(Limit.transform.position, GetComponent<Movement>().GetDirection(), Color.green);
+            if (enemyHit) enemy = enemyHit.collider.gameObject;
+            playerAnimator.SetBool("ataque up", true);
         }
 
     }

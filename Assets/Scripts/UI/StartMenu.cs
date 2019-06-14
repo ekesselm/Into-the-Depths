@@ -44,6 +44,13 @@ public class StartMenu : MonoBehaviour
         gameIsPaused = true;
     }
 
+    public void CerrarPartida()
+    {
+        PlayerPrefs.DeleteAll();
+        Application.Quit();
+    }
+
+
     public void MenuPrincipal()
     { 
         SceneManager.LoadScene("Level 0");

@@ -10,6 +10,7 @@ public class LookAroundScript : MonoBehaviour
 
     private Movement playerMovement;
 
+    public MapMechanic scriptMapa;
     private Vector2 positionTarget;
 
     private void Start()
@@ -22,20 +23,25 @@ public class LookAroundScript : MonoBehaviour
 
     private void Update()
     {
+        if (scriptMapa.PanelActive == false) { 
+
         if (playerMovement.IsMoving()) LookAroundObject.transform.position = player.transform.position;
         transform.position = player.transform.position;
+
+        }
     }
 
     private void OnMouseOver()
     {
+        if (scriptMapa.PanelActive == false) { 
         if (!playerMovement.IsMoving())
+
         {
             Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mousePosition = new Vector3(mousePosition.x, mousePosition.y, Camera.main.nearClipPlane);
             LookAroundObject.transform.position = mousePosition;
+
+            }
         }
     }
-    
-
-
 }

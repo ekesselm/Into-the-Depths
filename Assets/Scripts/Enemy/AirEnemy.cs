@@ -65,6 +65,7 @@ public class AirEnemy : MonoBehaviour
     {
         new WaitForSecondsRealtime(4f);
         playerHealth.Life -= 1;
+        Debug.Log("Entra");
         yield return new WaitForSeconds(0.1f);
         playerAnim.SetBool("playerHit", false);
 

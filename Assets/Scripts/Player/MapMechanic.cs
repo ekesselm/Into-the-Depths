@@ -8,7 +8,7 @@ public class MapMechanic : MonoBehaviour
 {
     public GameObject vida;
     public GameObject panel;
-    public bool PanelActive; 
+    public bool PanelActive;
 
     // Start is called before the first frame update
     void Start()
@@ -23,11 +23,12 @@ public class MapMechanic : MonoBehaviour
       if (Input.GetKeyDown(KeyCode.M))
         {
             PanelActive = !PanelActive;
-        }
+        } 
 
       if (PanelActive == true )
         {
             panel.SetActive(true);
+
         } else
         {
             panel.SetActive(false);

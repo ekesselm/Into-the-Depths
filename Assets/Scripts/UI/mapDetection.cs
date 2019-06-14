@@ -9,7 +9,7 @@ public class mapDetection : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     public void OnMouseEnter()
@@ -25,6 +25,6 @@ public class mapDetection : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }

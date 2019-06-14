@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 [RequireComponent(typeof(Animator))]
 public class Movement : MonoBehaviour
 {
-
+    
     private Rigidbody2D rb;
     public float speed;
     public float jumpForce;
@@ -33,7 +33,9 @@ public class Movement : MonoBehaviour
     public bool spawnDust;
 
     public bool dustLimiter;
-    
+
+    public Animator camAnim;
+
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -131,7 +133,7 @@ public class Movement : MonoBehaviour
 
         // Restart jump
         if (jumpInput == 0) needPressJumpButtonAgain = false;
-
+        //camAnim.SetTrigger("shake");
     }
 
     private void MoveAnimation()
