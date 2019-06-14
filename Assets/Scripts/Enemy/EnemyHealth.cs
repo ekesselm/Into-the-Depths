@@ -15,6 +15,9 @@ public class EnemyHealth : MonoBehaviour
 
     public int numSaltos = 3;
 
+    public AudioSource enemy1Death;
+    public AudioSource damageEnemy1;
+
     public void Die()
     {
 
@@ -22,6 +25,19 @@ public class EnemyHealth : MonoBehaviour
 
     }
 
+    public void sonidoDie()
+    {
+
+        enemy1Death.Play();
+
+    }
+
+    public void sonidoDamage()
+    {
+
+        damageEnemy1.Play();
+
+    }
 
     // Start is called before the first frame update
 
@@ -65,6 +81,7 @@ public class EnemyHealth : MonoBehaviour
         {
             if (enemyLife <= 0)
             {
+                damageEnemy1.Pause();
                 EnemyAnim.SetBool("muerte", true);
                 GetComponent<Rigidbody2D>().gravityScale = 9.8f;
                 GetComponent<AirEnemy>().enabled = false;

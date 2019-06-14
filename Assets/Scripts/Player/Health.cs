@@ -28,6 +28,8 @@ public class Health : MonoBehaviour
     private float time = 0.0f;
     public float waitTime = 10f;
 
+    public AudioSource hurtSound;
+
     void Start()
     {
         player.transform.position = new Vector3(0, -85, 0);

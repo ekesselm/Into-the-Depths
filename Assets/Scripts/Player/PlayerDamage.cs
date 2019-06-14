@@ -19,6 +19,9 @@ public class PlayerDamage : MonoBehaviour
 
     public GameObject Limit;
 
+    public AudioSource sonidoAtaque1;
+    public AudioSource sonidoAtaque2;
+
     IEnumerator RetardoAtaque()
     {
         yield return new WaitForSeconds(0.5f);
@@ -29,15 +32,17 @@ public class PlayerDamage : MonoBehaviour
     {
         colTop.enabled = true;
         colSide.enabled = false;
-        //colTop.enabled = !colSide.enabled;
         playerAnimator.SetBool("ataque up", false);
 
-        if (enemy)
+        if (gameObject.name.Contains("Aire")){
+
+            if (enemy)
         {
             enemy.GetComponent<Animator>().SetBool("hit", true);
             enemy.GetComponent<EnemyHealth>().enemyLife = enemy.GetComponent<EnemyHealth>().enemyLife - playerDamage;
             StartCoroutine(RetardoAtaque());
-            Debug.Log("HAY IMPACTO");
+        }
+
         }
     }
 
@@ -45,7 +50,6 @@ public class PlayerDamage : MonoBehaviour
     {
         colSide.enabled = true;
         colTop.enabled = false;
-        //colSide.enabled = !colTop.enabled;
         playerAnimator.SetBool("ataque", false);
 
         if (enemy) {
@@ -53,7 +57,7 @@ public class PlayerDamage : MonoBehaviour
             enemy.GetComponent<Animator>().SetBool("hit", true);
             enemy.GetComponent<EnemyHealth>().enemyLife = enemy.GetComponent<EnemyHealth>().enemyLife - playerDamage;
             StartCoroutine(RetardoAtaque());
-            Debug.Log("HAY IMPACTO");
+
         }
     }
 
@@ -82,6 +86,7 @@ public class PlayerDamage : MonoBehaviour
             Debug.DrawRay(Limit.transform.position, GetComponent<Movement>().GetDirection(), Color.green);
             if (enemyHit) enemy = enemyHit.collider.gameObject;
             playerAnimator.SetBool("ataque", true);
+            sonidoAtaque1.Play();
         }
 
         if (Input.GetKeyDown(KeyCode.E))
@@ -90,6 +95,7 @@ public class PlayerDamage : MonoBehaviour
             Debug.DrawRay(Limit.transform.position, GetComponent<Movement>().GetDirection(), Color.green);
             if (enemyHit) enemy = enemyHit.collider.gameObject;
             playerAnimator.SetBool("ataque up", true);
+            sonidoAtaque2.Play();
         }
 
     }

@@ -18,7 +18,10 @@ public class EnemyGroundAttack : MonoBehaviour
 
     private GameObject player;
     private Animator Enemy1Animator;
-    
+
+    public AudioSource ataqueEnemy1;
+
+
     public void Empujon()
     {
         // Detectar hacia que lado dar el empujón
@@ -28,6 +31,7 @@ public class EnemyGroundAttack : MonoBehaviour
 
         // Empujón
         player.GetComponent<Movement>().ReceiveAttack(lockPlayerSeconds);
+        ataqueEnemy1.Play();
         player.GetComponent<Rigidbody2D>().AddForce(direction * fuerzaEmpujon, ForceMode2D.Impulse);
         StartCoroutine("RetardoVida");
 
@@ -52,6 +56,7 @@ public class EnemyGroundAttack : MonoBehaviour
     {
         new WaitForSeconds(2f);
         playerHealth.Life -= enemyDamage;
+        playerHealth.hurtSound.Play();
         yield return new WaitForSeconds(0.1f);
 
     }

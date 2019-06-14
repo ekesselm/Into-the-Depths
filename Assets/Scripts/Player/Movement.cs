@@ -34,7 +34,10 @@ public class Movement : MonoBehaviour
 
     public bool dustLimiter;
 
-    public Animator camAnim;
+    public AudioSource sonidoAndar;
+    public AudioSource JumpSound;
+    public AudioSource LandSound;
+    public AudioClip LandULTIMATESound;
 
     void Start()
     {
@@ -55,6 +58,7 @@ public class Movement : MonoBehaviour
 
         if (isGrounded == true)
         {
+
             if (spawnDust == true && dustLimiter == true)
             {
                 Instantiate(dustEffect, feetPos.position, Quaternion.identity);
@@ -73,6 +77,13 @@ public class Movement : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         dustLimiter = true;
+
+        ///////////////////////////////////////////////////////////////////////////
+        /*
+        if (collision.gameObject.tag == "Ground")
+        {
+            LandSound.Play();
+        }*/
     }
 
     private void OnCollisionStay2D(Collision2D collision)
@@ -142,6 +153,33 @@ public class Movement : MonoBehaviour
         Debug.Log("jumpInput " + (jumpInput != 0f));
         animator.SetBool("andar", moveInput != 0f);
         animator.SetBool("saltar", jumpInput != 0f && canJump);
+       
+
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            sonidoAndar.Play();
+        }
+
+        if (Input.GetKeyUp(KeyCode.A))
+        {
+            sonidoAndar.Pause();
+        }
+
+
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            sonidoAndar.Play();
+        }
+
+        if (Input.GetKeyUp(KeyCode.D))
+        {
+            sonidoAndar.Pause();
+        }
+
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            JumpSound.Play();
+        }
 
         if (moveInput > 0)
         {
