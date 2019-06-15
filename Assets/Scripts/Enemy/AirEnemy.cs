@@ -34,6 +34,8 @@ public class AirEnemy : MonoBehaviour
 
     private SpriteRenderer spriteRen;
 
+    public AudioSource Enemy2Attack;
+
     public void Empujon()
     {
         // Detectar hacia que lado dar el empujón
@@ -170,9 +172,9 @@ public class AirEnemy : MonoBehaviour
             StartCoroutine("CooldownAtaque");
             StartCoroutine("CooldownDos");
             AttackCheck = true;
-
+            Enemy2Attack.Play();
             Enemy2Anim.SetBool("playerAround", true);
-
+            Enemy2Attack.Play();
             playerPos = player.transform.position;
             target = playerPos;
 

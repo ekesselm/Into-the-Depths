@@ -81,7 +81,6 @@ public class EnemyHealth : MonoBehaviour
         {
             if (enemyLife <= 0)
             {
-                damageEnemy1.Pause();
                 EnemyAnim.SetBool("muerte", true);
                 GetComponent<Rigidbody2D>().gravityScale = 9.8f;
                 GetComponent<AirEnemy>().enabled = false;

@@ -9,7 +9,7 @@ public class PlayerDamage : MonoBehaviour
 
     private Animator playerAnimator;
     private int playerDamage = 1;
-    private bool recibeDano;
+    public bool recibeDano;
 
     private GameObject enemy;
 
@@ -34,17 +34,16 @@ public class PlayerDamage : MonoBehaviour
         colSide.enabled = false;
         playerAnimator.SetBool("ataque up", false);
 
-        if (gameObject.name.Contains("Aire")){
-
-            if (enemy)
+        if (enemy)
         {
             enemy.GetComponent<Animator>().SetBool("hit", true);
             enemy.GetComponent<EnemyHealth>().enemyLife = enemy.GetComponent<EnemyHealth>().enemyLife - playerDamage;
             StartCoroutine(RetardoAtaque());
-        }
 
         }
-    }
+
+       }
+
 
     public void PlayerAttacksSide()
     {

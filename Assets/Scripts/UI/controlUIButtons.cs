@@ -8,7 +8,9 @@ public class controlUIButtons : MonoBehaviour
     public Animator fade;
     public GameObject FadePanel;
 
-    
+    public AudioSource cambiarOpcionSound;
+    public AudioSource tickSound;
+    public AudioSource sonidoRegresar;
 
    /* public static string PreviousScene = "";
 
@@ -23,11 +25,26 @@ public class controlUIButtons : MonoBehaviour
     void Start()
     {
 
-          
-     
-    } 
 
-   
+
+    }
+
+
+    public void sonidoCambiarOpcion()
+    {
+        cambiarOpcionSound.Play();
+    }
+
+    public void tickSonidoSound()
+    {
+        tickSound.Play();
+    }
+
+    public void playSonidoRegresar()
+    {
+        sonidoRegresar.Play();
+    }
+
 
     public void MenuPrincipal()
     {
@@ -66,7 +83,12 @@ public class controlUIButtons : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       if (fade == null)
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            cambiarOpcionSound.Play();
+        }
+
+        if (fade == null)
         {
             fade = GameObject.Find("FadePanel").GetComponent<Animator>();
         }

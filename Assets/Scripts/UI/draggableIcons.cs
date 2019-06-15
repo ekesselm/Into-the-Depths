@@ -20,6 +20,9 @@ public class draggableIcons : MonoBehaviour
 
     public bool isPrefab;
 
+    public controlUIButtons scriptButtons;
+
+
     void Start()
     {
         if (gameObject.name.Contains("(Clone)")) {
@@ -33,13 +36,14 @@ public class draggableIcons : MonoBehaviour
     }
     public void OnMouseOver()
     {
-        
     }
 
     public void OnMouseDown()
     {
+        scriptButtons.tickSound.Play();
+
         //El icono seleccionado se vuelve el cursor hasta que lo sueltes
-        if(isPrefab == false){
+        if (isPrefab == false){
 
         Cursor.SetCursor(iconoEnemigo, hotSpot, cursorMode);
 
@@ -61,11 +65,14 @@ public class draggableIcons : MonoBehaviour
     }   
     void OnMouseUp()
     {
+        scriptButtons.tickSound.Play();
+
         if (isPrefab == false)
         {
             //Si entra en el mapa, instancia en posición donde se arrastre.
 
             Cursor.SetCursor(null, Vector2.zero, cursorMode);
+
         if (mapa.iconInMap)
         {
             gameObject.transform.SetParent(mapaPos);
@@ -80,6 +87,8 @@ public class draggableIcons : MonoBehaviour
 
     public void Destroy()
     {
+        scriptButtons.sonidoRegresar.Play();
+
         if (isPrefab)
         {
             Destroy(gameObject);
