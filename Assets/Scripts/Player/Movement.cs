@@ -36,8 +36,7 @@ public class Movement : MonoBehaviour
 
     public AudioSource sonidoAndar;
     public AudioSource JumpSound;
-    public AudioSource LandSound;
-    public AudioClip LandULTIMATESound;
+
 
     void Start()
     {
@@ -144,13 +143,12 @@ public class Movement : MonoBehaviour
 
         // Restart jump
         if (jumpInput == 0) needPressJumpButtonAgain = false;
-        //camAnim.SetTrigger("shake");
     }
 
     private void MoveAnimation()
     {
-        Debug.Log("canJump " + canJump);
-        Debug.Log("jumpInput " + (jumpInput != 0f));
+        //Debug.Log("canJump " + canJump);
+        //Debug.Log("jumpInput " + (jumpInput != 0f));
         animator.SetBool("andar", moveInput != 0f);
         animator.SetBool("saltar", jumpInput != 0f && canJump);
        

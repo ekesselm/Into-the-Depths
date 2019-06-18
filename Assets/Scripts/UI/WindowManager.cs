@@ -35,6 +35,8 @@ public class WindowManager : MonoBehaviour
 
         currentResolutionIndex = PlayerPrefs.GetInt(RESOLUTION_PREF_KEY, 0);
 
+        currentResolutionIndex = resolutions.Length - 1;
+
         SetResolutionText(resolutions[currentResolutionIndex]);
 
         winMode.onValueChanged.AddListener(delegate {

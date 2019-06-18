@@ -14,7 +14,7 @@ public class AirEnemy : MonoBehaviour
     public Vector3 Limit2;
 
     public Health playerHealth;
-    public float lockPlayerSeconds = 1f;
+    public float lockPlayerSeconds = 0.5f;
     public Animator playerAnim;
     public bool movingRight;
 
@@ -30,9 +30,9 @@ public class AirEnemy : MonoBehaviour
 
     public float speed;
 
-    private Animator Enemy2Anim;
+    public Animator Enemy2Anim;
 
-    private SpriteRenderer spriteRen;
+    public SpriteRenderer spriteRen;
 
     public AudioSource Enemy2Attack;
 
@@ -41,11 +41,11 @@ public class AirEnemy : MonoBehaviour
         // Detectar hacia que lado dar el empujón
         Vector2 direction = Vector2.right;
         if (movingRight) direction = Vector2.left;
-
+        StartCoroutine("RetardoVida");
         // Empujón
         player.GetComponent<Movement>().ReceiveAttack(lockPlayerSeconds);
         player.GetComponent<Rigidbody2D>().AddForce(direction * 30, ForceMode2D.Impulse);
-        StartCoroutine("RetardoVida");
+ 
 
     }
 
@@ -63,49 +63,7 @@ public class AirEnemy : MonoBehaviour
 
     }
 
-    IEnumerator RetardoVida()
-    {
-        new WaitForSecondsRealtime(4f);
-        playerHealth.Life -= 1;
-        Debug.Log("Entra");
-        yield return new WaitForSeconds(0.1f);
-        playerAnim.SetBool("playerHit", false);
-
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision) 
-    {
-
-        if (collision.transform.CompareTag("Player")){
-            playerAnim.SetBool("playerHit", true);
-            Debug.Log("ENEMIGO ATACA");
-            Empujon();
-            AttackCheck = false;
-            limitsLimiter = true;
-    
-        }
-        
-    }
-    
-    /*private void OnTriggerEnter2D(Collider2D collision)
-    {
-       
-        if (collision.transform.CompareTag("Player") && Attacking)
-        {
-            StartCoroutine("CooldownAtaque");
-            StartCoroutine("CooldownDos");
-            AttackCheck = true;
-            playerPos = player.transform.position;
-            target = playerPos;
-   
-        }
-
-    }*/
-
-   
-
-
-        IEnumerator CooldownDos()
+    IEnumerator CooldownDos()
     {
         yield return new WaitForSecondsRealtime(1f);
         AttackCheck = false;
@@ -122,6 +80,37 @@ public class AirEnemy : MonoBehaviour
 
     }
 
+    IEnumerator RetardoVida()
+    {
+        new WaitForSecondsRealtime(4f);
+        playerHealth.Life -= 1;
+        Debug.Log("Entra");
+        yield return new WaitForSeconds(0.1f);
+        playerAnim.SetBool("playerHit", false);
+
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision) 
+    {
+
+        if (collision.transform.CompareTag("Player")){
+            playerHealth.hurtSound.Play();
+            playerAnim.SetBool("playerHit", true);
+            Empujon();
+            AttackCheck = false;
+            limitsLimiter = true;
+    
+        }
+        
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.transform.CompareTag("Player"))
+        {
+            playerAnim.SetBool("playerHit", false);
+        }
+    }
 
     private void FixedUpdate()
     {
@@ -156,37 +145,11 @@ public class AirEnemy : MonoBehaviour
             }
 
             target = OriginalPos;
-        }
 
+        }
 
         transform.position = Vector3.MoveTowards(transform.position, target, speed);
 
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-
-        if (collision.transform.CompareTag("Player") && Attacking)
-        {
-            GiraGira = false; 
-            StartCoroutine("CooldownAtaque");
-            StartCoroutine("CooldownDos");
-            AttackCheck = true;
-            Enemy2Attack.Play();
-            Enemy2Anim.SetBool("playerAround", true);
-            Enemy2Attack.Play();
-            playerPos = player.transform.position;
-            target = playerPos;
-
-            if (transform.position.x < player.transform.position.x && target == playerPos)
-            {
-                spriteRen.flipX = true;
-            }
-            else
-            {
-                spriteRen.flipX = false;
-            }
-
-        }
-    }
 }

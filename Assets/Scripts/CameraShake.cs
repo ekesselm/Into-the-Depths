@@ -6,11 +6,11 @@ using UnityEngine.Events;
 
 public class CameraShake : MonoBehaviour {
 
-    public float ShakeDuration = 0.3f;          
+    public float ShakeDuration = 1f;          
     public float ShakeAmplitude = 1.2f;         
     public float ShakeFrequency = 2.0f;         
 
-    private float ShakeElapsedTime = 0f;
+    public float ShakeElapsedTime = 0f;
 
     // Cinemachine Shake
     public CinemachineVirtualCamera VirtualCamera;

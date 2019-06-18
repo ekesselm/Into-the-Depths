@@ -22,9 +22,14 @@ public class PlayerDamage : MonoBehaviour
     public AudioSource sonidoAtaque1;
     public AudioSource sonidoAtaque2;
 
+    private EnemyHealth scriptVidaEnem;
+
+    public AudioSource sonidoDamageBoss;
+    public AudioClip clipSonidoDamageBoss;
+
     IEnumerator RetardoAtaque()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSecondsRealtime(0.5f);
         enemy.GetComponent<Animator>().SetBool("hit", false);
     }
 
@@ -32,11 +37,13 @@ public class PlayerDamage : MonoBehaviour
     {
         colTop.enabled = true;
         colSide.enabled = false;
+
         playerAnimator.SetBool("ataque up", false);
 
-        if (enemy)
+        if (enemy && scriptVidaEnem.IsAttackPossible)
         {
             enemy.GetComponent<Animator>().SetBool("hit", true);
+            sonidoDamageBoss.PlayOneShot(clipSonidoDamageBoss);
             enemy.GetComponent<EnemyHealth>().enemyLife = enemy.GetComponent<EnemyHealth>().enemyLife - playerDamage;
             StartCoroutine(RetardoAtaque());
 
@@ -51,9 +58,10 @@ public class PlayerDamage : MonoBehaviour
         colTop.enabled = false;
         playerAnimator.SetBool("ataque", false);
 
-        if (enemy) {
+        if (enemy && scriptVidaEnem.IsAttackPossible) {
 
             enemy.GetComponent<Animator>().SetBool("hit", true);
+            sonidoDamageBoss.PlayOneShot(clipSonidoDamageBoss);
             enemy.GetComponent<EnemyHealth>().enemyLife = enemy.GetComponent<EnemyHealth>().enemyLife - playerDamage;
             StartCoroutine(RetardoAtaque());
 
@@ -83,7 +91,13 @@ public class PlayerDamage : MonoBehaviour
         {
             RaycastHit2D enemyHit = Physics2D.Raycast(Limit.transform.position, GetComponent<Movement>().GetDirection(), 2f, LayerMask.GetMask("Enemy"));
             Debug.DrawRay(Limit.transform.position, GetComponent<Movement>().GetDirection(), Color.green);
-            if (enemyHit) enemy = enemyHit.collider.gameObject;
+
+            if (enemyHit)
+            {
+                enemy = enemyHit.collider.gameObject;
+                scriptVidaEnem = enemy.GetComponent<EnemyHealth>();
+            }
+            
             playerAnimator.SetBool("ataque", true);
             sonidoAtaque1.Play();
         }
@@ -92,10 +106,17 @@ public class PlayerDamage : MonoBehaviour
         {
             RaycastHit2D enemyHit = Physics2D.Raycast(Limit.transform.position, GetComponent<Movement>().GetDirection(), 2f, LayerMask.GetMask("Enemy"));
             Debug.DrawRay(Limit.transform.position, GetComponent<Movement>().GetDirection(), Color.green);
-            if (enemyHit) enemy = enemyHit.collider.gameObject;
+
+            if (enemyHit)
+            {
+                enemy = enemyHit.collider.gameObject;
+                scriptVidaEnem = enemy.GetComponent<EnemyHealth>();
+            }
+
             playerAnimator.SetBool("ataque up", true);
             sonidoAtaque2.Play();
-        }
 
+        }
     }
-}  
+
+}

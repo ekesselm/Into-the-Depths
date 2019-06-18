@@ -12,23 +12,14 @@ public class controlUIButtons : MonoBehaviour
     public AudioSource tickSound;
     public AudioSource sonidoRegresar;
 
-   /* public static string PreviousScene = "";
+    public GameObject bgParticles;
 
-    public void LoadScene(string sceneName)
-    {
-        PreviousScene = SceneManager.GetActiveScene().name;
-        SceneManager.LoadScene(sceneName);
-    }*/
+    public Scene scene;
 
-
-    // Start is called before the first frame update
     void Start()
     {
-
-
-
+        Scene scene = SceneManager.GetActiveScene();
     }
-
 
     public void sonidoCambiarOpcion()
     {
@@ -60,6 +51,7 @@ public class controlUIButtons : MonoBehaviour
 
     public void Fade()
     {
+        bgParticles.SetActive(false);
         FadePanel.SetActive(true);
         fade.SetBool("FadingTime", true);
         StartCoroutine("EsperaQueFade");
@@ -77,10 +69,10 @@ public class controlUIButtons : MonoBehaviour
         yield return new WaitForSeconds(0.4f);
         fade.SetBool("FadingTime", false);
         FadePanel.SetActive(false);
+        bgParticles.SetActive(true);
 
     }
     
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -88,7 +80,7 @@ public class controlUIButtons : MonoBehaviour
             cambiarOpcionSound.Play();
         }
 
-        if (fade == null)
+        if (fade == null && scene.name.Equals("Menus"))
         {
             fade = GameObject.Find("FadePanel").GetComponent<Animator>();
         }

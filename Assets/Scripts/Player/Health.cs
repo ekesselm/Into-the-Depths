@@ -25,7 +25,6 @@ public class Health : MonoBehaviour
 
     public GameObject player;
 
-    private float time = 0.0f;
     public float waitTime = 10f;
 
     public AudioSource hurtSound;
@@ -127,11 +126,11 @@ public class Health : MonoBehaviour
 
         if (Life == 0)
         {
+            StartCoroutine(GameOver());
             c4.SetActive(false);
             c3.SetActive(false);
             c2.SetActive(false);
-            c1.SetActive(false);
-            StartCoroutine(GameOver()); 
+            c1.SetActive(false); 
 
         }
     }

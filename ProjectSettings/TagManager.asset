@@ -10,6 +10,8 @@ TagManager:
   - UIDraggable
   - Grass
   - DetectorHierba
+  - Boss
+  - DetectorZonaMusica
   layers:
   - Default
   - TransparentFX

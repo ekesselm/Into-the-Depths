@@ -11,6 +11,9 @@ public class EnemyHealth : MonoBehaviour
     public GameObject feathers;
     public ParticleSystem featherParticle;
 
+    public BossScript scriptDelBoss;
+    public GameObject boss;
+
     public bool featherSpawn;
 
     public int numSaltos = 3;
@@ -18,11 +21,23 @@ public class EnemyHealth : MonoBehaviour
     public AudioSource enemy1Death;
     public AudioSource damageEnemy1;
 
+    public bool IsAttackPossible;
+    public bool suenaSonidoMuerte;
+
+    public AudioSource musicaBoss;
+    public AudioSource musicaBG;
+    public AudioSource sonidoMuerteBoss;
+
     public void Die()
     {
 
         Destroy(gameObject);
 
+    }
+
+    public void sonidoDieBoss()
+    {
+        sonidoMuerteBoss.Play();
     }
 
     public void sonidoDie()
@@ -43,6 +58,8 @@ public class EnemyHealth : MonoBehaviour
 
     void Start()
     {
+        suenaSonidoMuerte = false;
+        IsAttackPossible = true;
         feathers = GameObject.Find("Feathers");
         featherSpawn = false;
         EnemyAnim = GetComponent<Animator>();
@@ -68,12 +85,28 @@ public class EnemyHealth : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (gameObject.name.Contains("Tierra")) {
 
-        if (gameObject.name.Contains("Tierra")) { 
             if (enemyLife <= 0)
             {
             GetComponent<EnemyGroundMovement>().dead = true;
             EnemyAnim.SetBool("muerte", true); 
+            }
+        }
+
+        if (gameObject.name.Contains("Boss"))
+        {
+            if (enemyLife <= 0)
+            {
+                scriptDelBoss.noSaltesMas = false;
+                scriptDelBoss.puedoHacermeBola = 0;
+                scriptDelBoss.canAttack = false;
+                scriptDelBoss.isDead = true;
+                musicaBoss.Stop();
+                EnemyAnim.SetBool("muerte", true);
+                transform.gameObject.tag = "Untagged";
+                musicaBG.Play();
+
             }
         }
 

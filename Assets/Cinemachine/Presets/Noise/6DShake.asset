@@ -21,7 +21,7 @@ MonoBehaviour:
       Amplitude: 0.42
       Frequency: 0.32
     Z:
-      Amplitude: 0.85
+      Amplitude: 0
       Frequency: 0
   - X:
       Amplitude: 0.54
@@ -30,14 +30,14 @@ MonoBehaviour:
       Amplitude: 0.55
       Frequency: 0.41
     Z:
-      Amplitude: 0.03
+      Amplitude: 0
       Frequency: 0
   - X:
-      Amplitude: 0
-      Frequency: 0
+      Amplitude: 0.55
+      Frequency: 0.41
     Y:
-      Amplitude: 0
-      Frequency: 0
+      Amplitude: 0.55
+      Frequency: 0.41
     Z:
       Amplitude: 0
       Frequency: 0

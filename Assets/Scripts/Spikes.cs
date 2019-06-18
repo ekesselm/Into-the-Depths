@@ -14,6 +14,7 @@ public class Spikes : MonoBehaviour {
 
     public void Empujon(GameObject player)
     {
+            playerHealth.hurtSound.Play();
             player.GetComponent<Movement>().ReceiveAttack(lockPlayerSeconds);
             player.GetComponent<Rigidbody2D>().AddForce(Vector2.up * fuerzaEmpujon, ForceMode2D.Impulse);
             Debug.Log("Fuerza aplicada");

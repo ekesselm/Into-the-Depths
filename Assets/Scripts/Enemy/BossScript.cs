@@ -7,16 +7,16 @@ public class BossScript : MonoBehaviour
 
     public float tiempoAtaque = 0.60f;
     public bool isAttacking = false;
-
+    public bool isDead;
     public SpriteRenderer mySpriteRenderer;
 
     private int siSaleUnoSalto;
 
     public Vector3 target;
 
-    private Animator bossAnim;
-    private Rigidbody2D bossRB;
-    private RigidbodyType2D bodyType;
+    public Animator bossAnim;
+    public Rigidbody2D bossRB;
+    public RigidbodyType2D bodyType;
 
     public Transform Limite1;
     public Transform Limite2;
@@ -59,17 +59,28 @@ public class BossScript : MonoBehaviour
     public bool movimientoDer;
     public bool movimientoIzq;
 
+    public EnemyHealth scriptVida;
 
+    public AudioSource sonidoRespiracion;
+
+    public AudioSource sonidoAtaque;
+
+    public AudioSource sonidoSaltar;
+
+    public AudioSource sonidoGolpearSuelo;
 
     // Start is called before the first frame update
 
     void Start()
     {
+        sonidoRespiracion.Play();
+        isDead = false;
         noSaltesMas = true;
         posSalto.y = -70;
         AquiSalto.y = -81;
         voyaCaer = false;
         saltoVoyQueSaltoSalto = false;
+        scriptVida = gameObject.GetComponent<EnemyHealth>();
         bossAnim = gameObject.GetComponent<Animator>();
         bossRB = gameObject.GetComponent<Rigidbody2D>();
         mySpriteRenderer = GetComponent<SpriteRenderer>();
@@ -79,13 +90,28 @@ public class BossScript : MonoBehaviour
         movimientoIzq = false;
     }
 
+    public void playSonidoAtaque()
+    {
+        sonidoAtaque.Play();
+        
+    }
+
+    public void playSonidoGolpearAtaque()
+    {
+        if (noSaltesMas == true)
+        {
+
+            sonidoGolpearSuelo.Play();
+        }
+    }
+
     private void Ataque()
     {
         if (canAttack)
         {
+
             isAttacking = true;
-            Debug.Log("ATAQUENTRATAQUENTRA");
-          //  StartCoroutine("RetardoVida");
+            //  StartCoroutine("RetardoVida");
             //playerHealth.Life -= 1;
             bossAnim.SetBool("ataqueCerca", true);
             StartCoroutine("tiempoEsperaAtaque");
@@ -102,6 +128,7 @@ public class BossScript : MonoBehaviour
 
     private void Saltito()
     {
+
         if (movimientoDer)
         {
 
@@ -127,27 +154,26 @@ public class BossScript : MonoBehaviour
         //salto a la derecha
         if (determinanteDerecha == 0)
         {
-
-            Debug.Log("DESPEGUE");
-
+            scriptVida.IsAttackPossible = false;
             AquiSalto.x = (Random.Range(transform.position.x + 5f, transform.position.x + 9f));
             posSalto.x = (AquiSalto.x + transform.position.x) / 2;
             AquiSalto.y = -81;
             saltoVoyQueSaltoSalto = true;
             StartCoroutine("CooldownSalto");
-
+            sonidoSaltar.Play();
 
         }
 
         if (determinanteDerecha == 1)
         {
+            scriptVida.IsAttackPossible = false;
 
-            Debug.Log("DESPEGUE");
             AquiSalto.x = (Random.Range(transform.position.x - 5f, transform.position.x - 9f));
             posSalto.x = (AquiSalto.x + transform.position.x) / 2;
             AquiSalto.y = -81;
             saltoVoyQueSaltoSalto = true;
             StartCoroutine("CooldownSalto");
+            sonidoSaltar.Play();
 
         }
     }
@@ -155,6 +181,7 @@ public class BossScript : MonoBehaviour
     IEnumerator CooldownSalto()
     {
         noSaltesMas = false;
+        scriptVida.IsAttackPossible = false;
         yield return new WaitForSecondsRealtime(1f);
         noSaltesMas = true;
     }
@@ -189,39 +216,16 @@ public class BossScript : MonoBehaviour
         {
             if (col.transform.CompareTag("Player"))
             {
-                //float esperaParaAtacar = Random.Range(1f, 4f);
                 canAttack = true;
                 Invoke("Ataque", Random.Range(1f, 4f));
             }
         }
     }
 
-    /*private void OnTriggerStay2D(Collider2D col)
-    {
-        if (sleep == false)
-        {
-            if (col.transform.CompareTag("Player"))
-            {
-                
-            }
-        }
-    }*/
-
     private void OnTriggerExit2D(Collider2D col)
     {
         bossAnim.SetBool("ataqueCerca", false);
         canAttack = false;
-    }
-
-    private void OnCollisionStay2D(Collision2D col)
-    {
-        //Para que, cuando choque con el player, se despierte. 
-
-        if (Input.GetKey(KeyCode.Q))
-        {
-            sleep = false;
-            bossAnim.SetBool("sleep", false);
-        }
     }
 
     private void FixedUpdate()
@@ -234,8 +238,11 @@ public class BossScript : MonoBehaviour
 
         if (puedoRodar)
         {
+            scriptVida.IsAttackPossible = false;
+
             haciaElPrimero = true;
             transform.Rotate(0, 0, 30);
+
             if (haciaElPrimero)
             {
                 if (transform.position == Limite1.position)
@@ -256,14 +263,31 @@ public class BossScript : MonoBehaviour
 
         if (sleep == false && noSaltesMas == true && puedoHacermeBola != 1 && puedoRodar == false)
         {
-            siSaleUnoSalto = Random.Range(0, 100);
+            siSaleUnoSalto = Random.Range(0, 150);
         }
     }
+
     void Update()
     {
-        if (puedoHacermeBola == 1)
+
+        if (sleep)
+        {
+            sonidoRespiracion.Pause();
+
+        } else
+        {
+            sonidoRespiracion.UnPause();
+        }
+
+        if (isDead)
+        {
+            sonidoRespiracion.Stop();
+        }
+
+        if (puedoHacermeBola == 1 && isAttacking == false)
         {
             AtaqueBola();
+            sonidoSaltar.Play();
             puedoHacermeBola = 3;
         }
 
@@ -298,25 +322,12 @@ public class BossScript : MonoBehaviour
             }
         }
 
-        if (sleep)
-        {
-            bossRB.bodyType = RigidbodyType2D.Static;
-            col1.enabled = false;
-            col2.enabled = false;
-            colDormido.enabled = true;
-        }
-        else
-        {
-
-            bossRB.bodyType = RigidbodyType2D.Kinematic;
-            col1.enabled = true;
-            col2.enabled = true;
-            colDormido.enabled = false;
-        }
     }
+
 
     private void AtaqueBola()
     {
+        canAttack = true;
         bossAnim.SetBool("ballAttack", true);
         puedoRodar = true;
         StartCoroutine("cdbola");
@@ -325,7 +336,7 @@ public class BossScript : MonoBehaviour
 
     public void TurnTowardsPlayer()
     {
-        if (sleep == false && puedoRodar == false)
+        if (sleep == false && puedoRodar == false && !isDead)
         {
             if (transform.position.x > player.transform.position.x) // El player está a la IZQUIERDA
             {
@@ -338,11 +349,26 @@ public class BossScript : MonoBehaviour
         }
 
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (puedoRodar)
+        {
+            if (collision.transform.tag == "Player")
+            {
+                StartCoroutine("RetardoVida");
+                Debug.Log("Puede quitar vida");
+            }
+        }
+    }
+
     IEnumerator cdbola()
     {
-        Debug.Log("aaaaaaaaaaaaaa");
-        yield return new WaitForSecondsRealtime(4f);
+        Debug.Log("Ataque Bola");
+        yield return new WaitForSecondsRealtime(3f);
         bossAnim.SetBool("ballAttack", false);
+        scriptVida.IsAttackPossible = true;
+        canAttack = false;
         puedoRodar = false;
     }
 }

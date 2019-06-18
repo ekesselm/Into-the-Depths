@@ -14,16 +14,43 @@ public class GroundCrash : MonoBehaviour
 
     public bool comparandoFlow;
 
+    public CameraShake shakeScript;
+
+    public bool isStarting;
+
+    public AudioSource LandSound;
+
+    public float temporizador;
+    public bool SonidoSuelo;
+
+
     // Start is called before the first frame update
     void Start()
     {
+        isStarting = false;
+        StartCoroutine("RetardoShake");
         posNueva = transform.position.y;
         comparandoFlow = false;
+    }
+
+    IEnumerator RetardoShake()
+    {
+        yield return new WaitForSecondsRealtime(2f);
+        isStarting = true;
     }
 
     // Update is called once per frame
     void Update()
     {
+
+        if (SonidoSuelo == true)
+        {
+            temporizador += 1 * Time.deltaTime;
+        } else
+        {
+            temporizador = 0;
+        }
+
         realTime += Time.deltaTime;
 
         if (comparandoFlow == false) { 
@@ -37,7 +64,6 @@ public class GroundCrash : MonoBehaviour
             if (posAntigua > posNueva)
             {
                 comparandoFlow = true;
-                Debug.Log("ZASKO MASTER LAVA PA QUE TUS OIDOS GOCEN");
             }
         }
 
@@ -47,24 +73,40 @@ public class GroundCrash : MonoBehaviour
         {
             posAntigua = transform.position.y;
 
-            if (realTime >= 3)
+            if (realTime >= 1)
             {
                 posNueva = transform.position.y;
                 comparandoFlow = false;
                 realTime = 0;
-
+             
             }
 
-
+            posA = posNueva - posAntigua;
         }
 
-        if (posA >= 6)
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        SonidoSuelo = false;
+
+        if (temporizador >= 0.3)
         {
-            Debug.Log("COCINANDO SKILLS");
-            //meter camera shake HERE
+            LandSound.Play();
         }
 
-        posA = posNueva - posAntigua;
+        if (posA >= 7 && isStarting)
+        {
+            shakeScript.ShakeElapsedTime = shakeScript.ShakeDuration;
+        }
+
+        posA = 0;
+        comparandoFlow = false;
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        SonidoSuelo = true;
 
     }
 }
